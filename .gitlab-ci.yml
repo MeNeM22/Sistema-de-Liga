@@ -1,0 +1,9 @@
+image: node:22.13.1-slim
+
+stages:
+  - build
+
+build_job:
+  stage: build
+  script:
+    - ./build_all.sh

@@ -1,0 +1,1 @@
+# Modelo de repositorio TypScript
