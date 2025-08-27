@@ -8,7 +8,7 @@
   "scripts": {
     "format": "prettier --write \"app/**/*.ts\" \"test/**/*.ts\"",
     "start": "ts-node app/programa",
-    "lint": "eslint \"{app,test}/**/*.ts\" --fix",
+    "lint": "eslint \"{app,test}/**/*.ts\"",
     "test": "jest --runInBand",
     "test:cov": "jest --runInBand --coverage"
   },
