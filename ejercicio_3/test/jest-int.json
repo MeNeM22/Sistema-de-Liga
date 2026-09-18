@@ -1,0 +1,10 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "coverageReporters": ["text-summary"],
+  "testEnvironment": "node",
+  "testRegex": ".int-test.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}

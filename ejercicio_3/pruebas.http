@@ -1,0 +1,29 @@
+### Obtener versión del servicio
+GET http://localhost:3000/
+
+### Listar alumnos
+GET http://localhost:3000/alumnos
+
+### Crear alumno (válido)
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+	"padron": "3333",
+	"nombre": "Juan",
+	"apellido": "Pérez",
+	"fechaNacimiento": "01/01/1990"
+}
+
+### buscar alumno
+GET http://localhost:3000/alumnos?padron=3333
+
+### Crear alumno (inválido: padron faltante)
+POST http://localhost:3000/alumnos
+Content-Type: application/json
+
+{
+	"nombre": "Lucía",
+	"apellido": "García",
+	"fechaNacimiento": "15/05/1995"
+}

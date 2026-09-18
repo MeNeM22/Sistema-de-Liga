@@ -1,0 +1,14 @@
+services:
+  redis-test:
+    image: redis:8.2-alpine
+    ports:
+      - 6379:6379
+    expose:
+      - 6377
+
+  redis-dev:
+    image: redis:8.2-alpine
+    ports:
+      - 6378:6379
+    expose:
+      - 6378
