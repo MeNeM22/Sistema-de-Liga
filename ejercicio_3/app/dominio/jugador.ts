@@ -11,6 +11,7 @@ export default class Jugador {
     this.nacionalidad = nacionalidad;
     this.potencialidad = potencialidad;
   }
+
   public getValorMercado() {
     return this.valorMercado;
   }
@@ -20,5 +21,9 @@ export default class Jugador {
 
   public getPotencialidad() {
     return this.potencialidad;
+  }
+
+  public calcularPoderOfensivo() {
+    return 2;
   }
 }

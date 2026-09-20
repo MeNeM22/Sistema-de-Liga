@@ -18,13 +18,17 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
 });
 
 describe("Test Jugador: Ingreso valores validos", () => {
+  const valorMercado = 1000;
+  const nacionalidad = "Argentina";
+  const potencialidad = 2;
   test("Deberia devolver cada campo instanciado del jugador", () => {
-    const valorMercado = 1000;
-    const nacionalidad = "Argentina";
-    const potencialidad = 2;
     const jugador = new Jugador(valorMercado, nacionalidad, potencialidad);
     expect(jugador.getValorMercado()).toBe(1000);
     expect(jugador.getNacionalidad()).toBe("Argentina");
     expect(jugador.getPotencialidad()).toBe(2);
+  });
+  test("Deberia devolver el poder ofensivo del jugador", () => {
+    const jugador = new Jugador(valorMercado, nacionalidad, potencialidad);
+    expect(jugador.calcularPoderOfensivo()).toBe(2);
   });
 });
