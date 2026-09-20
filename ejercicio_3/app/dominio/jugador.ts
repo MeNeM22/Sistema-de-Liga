@@ -1,6 +1,9 @@
 export default class Jugador {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
+  private potencialidad: number;
   constructor(potencialidad: number) {
-    throw new Error("La potencialidad es invalida");
+    if (potencialidad > 5) {
+      throw new Error("La potencialidad es invalida");
+    }
+    this.potencialidad = potencialidad;
   }
 }
