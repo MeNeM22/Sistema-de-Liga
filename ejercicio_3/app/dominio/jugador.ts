@@ -24,6 +24,6 @@ export default class Jugador {
   }
 
   public calcularPoderOfensivo() {
-    return 2;
+    return this.getPotencialidad() * 1;
   }
 }
