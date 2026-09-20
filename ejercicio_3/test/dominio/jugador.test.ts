@@ -6,4 +6,9 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
       new Jugador(6);
     }).toThrow("La potencialidad es invalida");
   });
+  test("Deberia devolver un error al ingresar una potencialidad menor a 0", () => {
+    expect(() => {
+      new Jugador(-1);
+    }).toThrow("La potencialidad es invalida");
+  });
 });
