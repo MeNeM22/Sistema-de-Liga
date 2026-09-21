@@ -28,3 +28,23 @@ describe("Test Equipo: Ingreso campos validos", () => {
     expect(equipo.getPresupuesto()).toBe(10000);
   });
 });
+
+describe("Test Equipo: Limite de plantilla", () => {
+  test("Deberia devolver un error al intentar fichar un jugador si la plantilla tiene 32 jugadores", () => {
+    const nombre = "Real Madrid";
+    const presupuesto = 10000;
+    const equipo = new Equipo(nombre, presupuesto);
+
+    const jugador = new Jugador(1000, "Argentina", 3, "Defensor");
+
+    for (let i = 0; i < 32; i++) {
+      equipo.ficharJugador(jugador);
+    }
+
+    const jugadorExtra = new Jugador(2000, "Brasil", 5, "Delantero");
+
+    expect(() => {
+      equipo.ficharJugador(jugadorExtra);
+    }).toThrow("La plantilla ya esta completa");
+  });
+});

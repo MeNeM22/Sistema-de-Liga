@@ -17,8 +17,11 @@ export default class Equipo {
   public getPresupuesto() {
     return this.presupuesto;
   }
-
   public ficharJugador(jugador: Jugador) {
-    this.plantilla.push(jugador);
+    if (this.getPlantilla().length < 32) {
+      this.plantilla.push(jugador);
+    } else {
+      throw new Error("La plantilla ya esta completa");
+    }
   }
 }
