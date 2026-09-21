@@ -43,7 +43,7 @@ export default class Equipo {
       } else if (posicion === "Mediocampista") {
         cantidadMediocampistas++;
       }
-      poderOfensivoTotalJugadores += jugador.getPotencialidad() * 1;
+      poderOfensivoTotalJugadores += jugador.calcularPoderOfensivo() * 1;
     }
     return cantidadDelanteros + 0.5 * cantidadMediocampistas + poderOfensivoTotalJugadores;
   }
