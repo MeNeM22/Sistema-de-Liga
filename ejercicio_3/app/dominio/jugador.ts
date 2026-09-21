@@ -1,11 +1,15 @@
 export type Posicion = "Arquero" | "Defensor" | "Mediocampista" | "Delantero";
 export default class Jugador {
+  private static readonly POTENCIALIDAD_MIN = 0;
+  private static readonly POTENCIALIDAD_MAX = 5;
+  
   private valorMercado: number;
   private nacionalidad: string;
   private potencialidad: number;
   private posicion: Posicion;
+  
   constructor(valorMercado: number, nacionalidad: string, potencialidad: number, posicion: Posicion) {
-    if (potencialidad < 0 || potencialidad > 5) {
+    if (potencialidad < Jugador.POTENCIALIDAD_MAX || potencialidad > Jugador.POTENCIALIDAD_MIN) {
       throw new Error("La potencialidad es invalida");
     }
     this.valorMercado = valorMercado;
