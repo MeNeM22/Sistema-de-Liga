@@ -17,4 +17,8 @@ export default class Equipo {
   public getPresupuesto() {
     return this.presupuesto;
   }
+
+  public ficharJugador(jugador: Jugador) {
+    this.plantilla.push(jugador);
+  }
 }
