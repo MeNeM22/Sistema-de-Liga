@@ -10,22 +10,23 @@ export default class Equipo {
     this.presupuesto = presupuestoInicial;
     this.plantilla = [];
   }
-  public getNombreEquipo() {
+  public getNombreEquipo(): string {
     return this.nombreEquipo;
   }
-  public getPlantilla() {
+  //rompe encapsulamiento, verificar
+  public getPlantilla(): Jugador[] {
     return this.plantilla;
   }
-  public getPresupuesto() {
+  public getPresupuesto(): number {
     return this.presupuesto;
   }
-  public getCantidadDeJugadores() {
+  public getCantidadDeJugadores(): number {
     return this.getPlantilla().length;
   }
   public plantillaEstaLlena(): boolean {
     return this.getCantidadDeJugadores() >= Equipo.JUGADORES_MAX;
   }
-  public ficharJugador(jugador: Jugador) {
+  public ficharJugador(jugador: Jugador): void {
     if (this.plantillaEstaLlena()) {
       throw new Error("La plantilla ya esta completa");
     }

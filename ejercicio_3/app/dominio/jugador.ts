@@ -18,20 +18,20 @@ export default class Jugador {
     this.posicion = posicion;
   }
 
-  public getValorMercado() {
+  public getValorMercado(): number {
     return this.valorMercado;
   }
-  public getNacionalidad() {
+  public getNacionalidad(): string {
     return this.nacionalidad;
   }
 
-  public getPotencialidad() {
+  public getPotencialidad(): number {
     return this.potencialidad;
   }
-  public getPosicion() {
+  public getPosicion(): string {
     return this.posicion;
   }
-  public calcularPoderOfensivo() {
+  public calcularPoderOfensivo(): number {
     return this.getPotencialidad() * 1;
   }
 
