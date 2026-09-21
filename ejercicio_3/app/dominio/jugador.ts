@@ -36,6 +36,6 @@ export default class Jugador {
   }
 
   public calcularPoderDefensivo(): number {
-    return -2;
+    return this.getPotencialidad() * -1;
   }
 }
