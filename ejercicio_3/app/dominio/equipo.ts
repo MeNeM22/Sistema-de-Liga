@@ -22,8 +22,11 @@ export default class Equipo {
   public getCantidadDeJugadores() {
     return this.getPlantilla().length;
   }
+  public plantillaEstaLlena(): boolean {
+    return this.getCantidadDeJugadores() >= Equipo.JUGADORES_MAX;
+  }
   public ficharJugador(jugador: Jugador) {
-    if (this.getCantidadDeJugadores() >= Equipo.JUGADORES_MAX) {
+    if (this.plantillaEstaLlena()) {
       throw new Error("La plantilla ya esta completa");
     }
     this.plantilla.push(jugador);
