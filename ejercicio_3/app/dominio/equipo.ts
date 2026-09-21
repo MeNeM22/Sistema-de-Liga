@@ -1,12 +1,20 @@
 import Jugador from "../../app/dominio/jugador";
 export default class Equipo {
-  /* eslint-disable @typescript-eslint/no-unused-vars */
-
-  constructor(plantilla: Jugador[]) {}
-  public getPlantilla() {
-    return [];
+  private nombreEquipo: string;
+  private presupuesto: number;
+  private plantilla: Jugador[];
+  constructor(nombre: string, presupuestoInicial: number) {
+    this.nombreEquipo = nombre;
+    this.presupuesto = presupuestoInicial;
+    this.plantilla = [];
   }
-  calcularPresupuesto() {
-    return 0;
+  public getNombreEquipo() {
+    return this.nombreEquipo;
+  }
+  public getPlantilla() {
+    return this.plantilla;
+  }
+  public getPresupuesto() {
+    return this.presupuesto;
   }
 }
