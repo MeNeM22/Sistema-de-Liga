@@ -48,6 +48,21 @@ export default class Equipo {
     return cantidadDelanteros + 0.5 * cantidadMediocampistas + poderOfensivoTotalJugadores;
   }
   public calcularPoderDefensivo(): number {
-    return 16.5;
+    let cantidadDefensores = 0;
+    let cantidadArqueros = 0;
+    let cantidadMediocampistas = 0;
+    let poderDefensivoTotalJugadores = 0;
+    for (const jugador of this.plantilla) {
+      const posicion = jugador.getPosicion();
+      if (posicion == "Defensor") {
+        cantidadDefensores++;
+      } else if (posicion === "Mediocampista") {
+        cantidadMediocampistas++;
+      } else if (posicion === "Arquero") {
+        cantidadArqueros++;
+      }
+      poderDefensivoTotalJugadores += jugador.calcularPoderDefensivo() * -1;
+    }
+    return cantidadDefensores + 0.5 * cantidadMediocampistas + cantidadArqueros + poderDefensivoTotalJugadores;
   }
 }
