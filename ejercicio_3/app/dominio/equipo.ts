@@ -32,4 +32,7 @@ export default class Equipo {
     }
     this.plantilla.push(jugador);
   }
+  public calcularPoderOfensivo(): number {
+    return 9;
+  }
 }
