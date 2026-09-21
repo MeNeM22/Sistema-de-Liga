@@ -34,4 +34,8 @@ describe("Test Jugador: Ingreso valores validos", () => {
     const jugador = new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
     expect(jugador.calcularPoderOfensivo()).toBe(2);
   });
+  test("Deberia devolver el poder defensivo del jugador", () => {
+    const jugador = new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
+    expect(jugador.calcularPoderDefensivo()).toBe(-2);
+  });
 });
