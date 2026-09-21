@@ -33,6 +33,18 @@ export default class Equipo {
     this.plantilla.push(jugador);
   }
   public calcularPoderOfensivo(): number {
-    return 9;
+    let cantidadDelanteros = 0;
+    let cantidadMediocampistas = 0;
+    let poderOfensivoTotalJugadores = 0;
+    for (const jugador of this.plantilla) {
+      const posicion = jugador.getPosicion();
+      if (posicion == "Delantero") {
+        cantidadDelanteros++;
+      } else if (posicion === "Mediocampista") {
+        cantidadMediocampistas++;
+      }
+      poderOfensivoTotalJugadores += jugador.getPotencialidad() * 1;
+    }
+    return cantidadDelanteros + 0.5 * cantidadMediocampistas + poderOfensivoTotalJugadores;
   }
 }

@@ -34,7 +34,7 @@ describe("Test Equipo: Ingreso campos validos", () => {
     equipo.ficharJugador(jugador1);
     equipo.ficharJugador(jugador2);
     equipo.ficharJugador(jugador3);
-    expect(equipo.calcularPoderOfensivo()).toBe(9);
+    expect(equipo.calcularPoderOfensivo()).toBe(13.5);
   });
 });
 
