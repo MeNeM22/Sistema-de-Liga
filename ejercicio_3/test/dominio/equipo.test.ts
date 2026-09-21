@@ -8,12 +8,14 @@ describe("Test Equipo: Ingreso campos validos", () => {
   let jugador1: Jugador;
   let jugador2: Jugador;
   let jugador3: Jugador;
+  let jugador4: Jugador;
 
   beforeEach(() => {
     equipo = new Equipo(nombre, presupuesto);
     jugador1 = new Jugador(2000, "Argentina", 5, "Delantero");
     jugador2 = new Jugador(1500, "Brasil", 4, "Mediocampista");
     jugador3 = new Jugador(1000, "Uruguay", 3, "Defensor");
+    jugador4 = new Jugador(1000, "Chile", 2, "Arquero");
   });
 
   test("Deberia devolver un equipo estanciado con su nombre, 0 jugadores y su presupuesto inicial", () => {
@@ -34,7 +36,8 @@ describe("Test Equipo: Ingreso campos validos", () => {
     equipo.ficharJugador(jugador1);
     equipo.ficharJugador(jugador2);
     equipo.ficharJugador(jugador3);
-    expect(equipo.calcularPoderOfensivo()).toBe(13.5);
+    equipo.ficharJugador(jugador4);
+    expect(equipo.calcularPoderDefensivo()).toBe(16.5);
   });
 });
 

@@ -47,4 +47,7 @@ export default class Equipo {
     }
     return cantidadDelanteros + 0.5 * cantidadMediocampistas + poderOfensivoTotalJugadores;
   }
+  public calcularPoderDefensivo(): number {
+    return 16.5;
+  }
 }
