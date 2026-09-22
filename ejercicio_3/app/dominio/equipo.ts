@@ -48,35 +48,29 @@ export default class Equipo {
     return poderDefensivoTotalJugadores;
   }
 
-  public calcularPoderOfensivo(): number {
-    let cantidadDelanteros = 0;
-    let cantidadMediocampistas = 0;
+  public contarJugadoresPorPosicion(posicionBuscada: string): number {
+    let cantidadEnPosicionBuscada = 0;
     for (const jugador of this.plantilla) {
-      const posicion = jugador.getPosicion();
-      if (posicion == "Delantero") {
-        cantidadDelanteros++;
-      } else if (posicion === "Mediocampista") {
-        cantidadMediocampistas++;
+      if (jugador.getPosicion() == posicionBuscada) {
+        cantidadEnPosicionBuscada++;
       }
     }
-    return cantidadDelanteros + 0.5 * cantidadMediocampistas + this.calcularPoderOfensivoTotalJugadores();
+    return cantidadEnPosicionBuscada;
+  }
+
+  public calcularPoderOfensivo(): number {
+    return (
+      this.contarJugadoresPorPosicion("Delantero") +
+      0.5 * this.contarJugadoresPorPosicion("Mediocampista") +
+      this.calcularPoderOfensivoTotalJugadores()
+    );
   }
   public calcularPoderDefensivo(): number {
-    let cantidadDefensores = 0;
-    let cantidadArqueros = 0;
-    let cantidadMediocampistas = 0;
-    for (const jugador of this.plantilla) {
-      const posicion = jugador.getPosicion();
-      if (posicion == "Defensor") {
-        cantidadDefensores++;
-      } else if (posicion === "Mediocampista") {
-        cantidadMediocampistas++;
-      } else if (posicion === "Arquero") {
-        cantidadArqueros++;
-      }
-    }
     return (
-      cantidadDefensores + 0.5 * cantidadMediocampistas + cantidadArqueros + this.calcularPoderDefensivoTotalJugadores()
+      this.contarJugadoresPorPosicion("Defensor") +
+      0.5 * this.contarJugadoresPorPosicion("Mediocampista") +
+      this.contarJugadoresPorPosicion("Arquero") +
+      this.calcularPoderDefensivoTotalJugadores()
     );
   }
 }
