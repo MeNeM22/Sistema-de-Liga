@@ -30,7 +30,20 @@ export default class Equipo {
     if (this.plantillaEstaLlena()) {
       throw new Error("La plantilla ya esta completa");
     }
+    if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto){
+      throw new Error("El presupuesto fue excedido");
+    }
     this.plantilla.push(jugador);
+  }
+  private calcularPresupuestoEjecutado(valorJugadorNuevo: number): number{
+    let presupuestoEjecutado = 0;
+    let valorTotalJugadores = 0;
+    for (const jugador of this.plantilla) {
+      valorTotalJugadores += jugador.getValorMercado();
+    }
+    valorTotalJugadores += valorJugadorNuevo;
+    presupuestoEjecutado = valorTotalJugadores + 0.10;
+    return presupuestoEjecutado
   }
   private calcularPoderOfensivoTotalJugadores(): number {
     let poderOfensivoTotalJugadores = 0;
