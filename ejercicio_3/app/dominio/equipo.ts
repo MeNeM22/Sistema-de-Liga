@@ -1,6 +1,7 @@
 import Jugador from "../../app/dominio/jugador";
 export default class Equipo {
   private static readonly JUGADORES_MAX = 32;
+  private static readonly CARGAS_FISCALES = 0.1;
 
   private nombreEquipo: string;
   private presupuesto: number;
@@ -36,14 +37,14 @@ export default class Equipo {
     this.plantilla.push(jugador);
   }
   private calcularPresupuestoEjecutado(valorJugadorNuevo: number): number {
-    let presupuestoEjecutado = 0;
     let valorTotalJugadores = 0;
+    let cargasFiscales = 0;
     for (const jugador of this.plantilla) {
       valorTotalJugadores += jugador.getValorMercado();
     }
     valorTotalJugadores += valorJugadorNuevo;
-    presupuestoEjecutado = valorTotalJugadores + 0.1;
-    return presupuestoEjecutado;
+    cargasFiscales = valorTotalJugadores * Equipo.CARGAS_FISCALES;
+    return valorTotalJugadores + cargasFiscales;
   }
   private calcularPoderOfensivoTotalJugadores(): number {
     let poderOfensivoTotalJugadores = 0;
