@@ -2,6 +2,7 @@ import Jugador from "../../app/dominio/jugador";
 export default class Equipo {
   private static readonly JUGADORES_MAX = 32;
   private static readonly CARGAS_FISCALES = 0.1;
+  private static readonly ARQUEROS_REQUERIDOS = 2;
 
   private nombreEquipo: string;
   private presupuesto: number;
@@ -34,7 +35,10 @@ export default class Equipo {
     if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
       throw new Error("El presupuesto fue excedido");
     }
-    if (jugador.getPosicion() === "Arquero" && this.contarJugadoresPorPosicion("Arquero") >= 2) {
+    if (
+      jugador.getPosicion() === "Arquero" &&
+      this.contarJugadoresPorPosicion("Arquero") >= Equipo.ARQUEROS_REQUERIDOS
+    ) {
       throw new Error("Cantidad maxima de arqueros alcanzada");
     }
     this.plantilla.push(jugador);
