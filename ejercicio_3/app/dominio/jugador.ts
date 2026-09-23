@@ -31,6 +31,7 @@ export default class Jugador {
   public getPosicion(): string {
     return this.posicion;
   }
+
   public calcularPoderOfensivo(): number {
     return this.getPotencialidad() * 1;
   }

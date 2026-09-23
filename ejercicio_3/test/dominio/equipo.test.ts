@@ -20,18 +20,20 @@ describe("Test Equipo: Ingreso campos validos", () => {
 
   test("Deberia devolver un equipo estanciado con su nombre, 0 jugadores y su presupuesto inicial", () => {
     expect(equipo.getNombreEquipo()).toBe("Barcelona fc");
-    expect(equipo.getPlantilla().length).toBe(0);
+    expect(equipo.getCantidadDeJugadores()).toBe(0);
     expect(equipo.getPresupuesto()).toBe(10000);
   });
+
   test("Deberia devolver un equipo con una plantilla de 3 jugadores", () => {
     equipo.ficharJugador(jugador1);
     equipo.ficharJugador(jugador2);
     equipo.ficharJugador(jugador3);
 
     expect(equipo.getNombreEquipo()).toBe("Barcelona fc");
-    expect(equipo.getPlantilla().length).toBe(3);
+    expect(equipo.getCantidadDeJugadores()).toBe(3);
     expect(equipo.getPresupuesto()).toBe(10000);
   });
+
   test("Deberia calcular correctamente el poder ofensivo", () => {
     equipo.ficharJugador(jugador1);
     equipo.ficharJugador(jugador2);

@@ -1,4 +1,5 @@
 import Jugador from "../../app/dominio/jugador";
+
 export default class Equipo {
   private static readonly JUGADORES_MAX = 32;
   private static readonly CARGAS_FISCALES = 0.1;
@@ -7,27 +8,33 @@ export default class Equipo {
   private nombreEquipo: string;
   private presupuesto: number;
   private plantilla: Jugador[];
+
   constructor(nombre: string, presupuestoInicial: number) {
     this.nombreEquipo = nombre;
     this.presupuesto = presupuestoInicial;
     this.plantilla = [];
   }
+
   public getNombreEquipo(): string {
     return this.nombreEquipo;
   }
-  //rompe encapsulamiento, verificar
-  public getPlantilla(): Jugador[] {
+
+  private getPlantilla(): Jugador[] {
     return this.plantilla;
   }
+
   public getPresupuesto(): number {
     return this.presupuesto;
   }
+
   public getCantidadDeJugadores(): number {
     return this.getPlantilla().length;
   }
-  public plantillaEstaLlena(): boolean {
+
+  private plantillaEstaLlena(): boolean {
     return this.getCantidadDeJugadores() >= Equipo.JUGADORES_MAX;
   }
+
   public ficharJugador(jugador: Jugador): void {
     if (this.plantillaEstaLlena()) {
       throw new Error("La plantilla ya esta completa");
@@ -43,9 +50,10 @@ export default class Equipo {
     }
     this.plantilla.push(jugador);
   }
+
   private calcularPresupuestoEjecutado(valorJugadorNuevo: number): number {
-    let valorTotalJugadores = 0;
-    let cargasFiscales = 0;
+    let valorTotalJugadores: number = 0;
+    let cargasFiscales: number = 0;
     for (const jugador of this.plantilla) {
       valorTotalJugadores += jugador.getValorMercado();
     }
@@ -53,8 +61,9 @@ export default class Equipo {
     cargasFiscales = valorTotalJugadores * Equipo.CARGAS_FISCALES;
     return valorTotalJugadores + cargasFiscales;
   }
+
   private calcularPoderOfensivoTotalJugadores(): number {
-    let poderOfensivoTotalJugadores = 0;
+    let poderOfensivoTotalJugadores: number = 0;
     for (const jugador of this.plantilla) {
       poderOfensivoTotalJugadores += jugador.calcularPoderOfensivo() * 1;
     }
@@ -62,7 +71,7 @@ export default class Equipo {
   }
 
   private calcularPoderDefensivoTotalJugadores(): number {
-    let poderDefensivoTotalJugadores = 0;
+    let poderDefensivoTotalJugadores: number = 0;
     for (const jugador of this.plantilla) {
       poderDefensivoTotalJugadores += jugador.calcularPoderDefensivo() * -1;
     }
@@ -70,7 +79,7 @@ export default class Equipo {
   }
 
   private contarJugadoresPorPosicion(posicionBuscada: string): number {
-    let cantidadEnPosicionBuscada = 0;
+    let cantidadEnPosicionBuscada: number = 0;
     for (const jugador of this.plantilla) {
       if (jugador.getPosicion() == posicionBuscada) {
         cantidadEnPosicionBuscada++;
@@ -86,6 +95,7 @@ export default class Equipo {
       this.calcularPoderOfensivoTotalJugadores()
     );
   }
+
   public calcularPoderDefensivo(): number {
     return (
       this.contarJugadoresPorPosicion("Defensor") +

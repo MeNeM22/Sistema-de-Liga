@@ -4,12 +4,14 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
   const valorMercado = 1000;
   const nacionalidad = "Argentina";
   const posicion = "Delantero";
+
   test("Deberia devolver un error al ingresar una potencialidad mayor a 5", () => {
     const potencialidad = 6;
     expect(() => {
       new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
     }).toThrow("La potencialidad es invalida");
   });
+
   test("Deberia devolver un error al ingresar una potencialidad menor a 0", () => {
     const potencialidad = -1;
     expect(() => {
@@ -23,6 +25,7 @@ describe("Test Jugador: Ingreso valores validos", () => {
   const nacionalidad = "Argentina";
   const potencialidad = 2;
   const posicion = "Defensor";
+
   test("Deberia devolver cada campo instanciado del jugador", () => {
     const jugador = new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
     expect(jugador.getValorMercado()).toBe(1000);
@@ -30,10 +33,12 @@ describe("Test Jugador: Ingreso valores validos", () => {
     expect(jugador.getPotencialidad()).toBe(2);
     expect(jugador.getPosicion()).toBe("Defensor");
   });
+
   test("Deberia devolver el poder ofensivo del jugador", () => {
     const jugador = new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
     expect(jugador.calcularPoderOfensivo()).toBe(2);
   });
+
   test("Deberia devolver el poder defensivo del jugador", () => {
     const jugador = new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
     expect(jugador.calcularPoderDefensivo()).toBe(-2);
