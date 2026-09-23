@@ -74,3 +74,19 @@ describe("Test Equipo: Limite de presupuesto", () => {
     }).toThrow("El presupuesto fue excedido");
   });
 });
+
+describe("Test Equipo: Limite de arqueros", () => {
+  test("Deberia devolver un error al intentar fichar un arquero cuando ya hay 2 fichados", () => {
+    const nombre = "Racing";
+    const presupuesto = 200;
+    const equipo = new Equipo(nombre, presupuesto);
+    const jugador1 = new Jugador(80, "Argentina", 3, "Arquero");
+    const jugador2 = new Jugador(30, "Brasil", 2, "Arquero");
+    const jugador3 = new Jugador(30, "Chile", 2, "Arquero");
+    equipo.ficharJugador(jugador1);
+    equipo.ficharJugador(jugador2);
+    expect(() => {
+      equipo.ficharJugador(jugador3);
+    }).toThrow("Cantidad maxima de arqueros alcanzada");
+  });
+});
