@@ -34,7 +34,7 @@ export default class Equipo {
     if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
       throw new Error("El presupuesto fue excedido");
     }
-    if(jugador.getPosicion() === "Arquero" && this.contarJugadoresPorPosicion("Arquero") >= 2){
+    if (jugador.getPosicion() === "Arquero" && this.contarJugadoresPorPosicion("Arquero") >= 2) {
       throw new Error("Cantidad maxima de arqueros alcanzada");
     }
     this.plantilla.push(jugador);
