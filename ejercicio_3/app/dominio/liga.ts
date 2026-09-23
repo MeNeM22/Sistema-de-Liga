@@ -10,6 +10,9 @@ export default class Liga {
     if (this.cantidadEquiposRegistrados() >= Liga.EQUIPOS_MAX) {
       throw new Error("La liga ya tiene el cupo maximo de 10 equipos");
     }
+    if (equipo.getPresupuesto() == 1000) {
+      throw new Error("La liga ya alcanzo el presupuesto maximo");
+    }
     this.equipos.push(equipo);
   }
   private cantidadEquiposRegistrados(): number {

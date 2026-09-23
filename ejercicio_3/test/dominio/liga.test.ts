@@ -13,3 +13,16 @@ describe("Test Liga: Límite de equipos", () => {
     }).toThrow("La liga ya tiene el cupo maximo de 10 equipos");
   });
 });
+describe("Test Liga: Límite de presupuesto", () => {
+  test("Debería lanzar un error al intentar inscribir un equipo cuando se alcanzo el limite de presupuesto", () => {
+    const liga = new Liga();
+    const equipo1 = new Equipo("River", 500000);
+    const equipo2 = new Equipo("Independiente", 500000);
+    const equipo3 = new Equipo("River", 1000);
+    liga.registrarEquipo(equipo1);
+    liga.registrarEquipo(equipo2);
+    expect(() => {
+      liga.registrarEquipo(equipo3);
+    }).toThrow("La liga ya alcanzo el presupuesto maximo");
+  });
+});
