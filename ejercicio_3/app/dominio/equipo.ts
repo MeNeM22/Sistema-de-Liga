@@ -65,7 +65,7 @@ export default class Equipo {
       poderOfensivoTotal += jugador.calcularPoderOfensivo();
       poderOfensivoTotal += jugador.getPosicion().poderOfensivoBase();
     }
-    return poderOfensivoTotal;
+    return Math.floor(poderOfensivoTotal);
   }
 
   public calcularPoderDefensivo(): number {
@@ -74,7 +74,7 @@ export default class Equipo {
       poderDefensivotal += jugador.calcularPoderDefensivo() * -1;
       poderDefensivotal += jugador.getPosicion().poderDefensivoBase();
     }
-    return poderDefensivotal;
+    return Math.floor(poderDefensivotal);
   }
 
   private contarArquerosEnPlantilla(): number {

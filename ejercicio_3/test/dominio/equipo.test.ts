@@ -35,6 +35,32 @@ describe("Test Equipo: Ingreso campos validos", () => {
 });
 
 describe("Test Equipo: escenarios de prueba de consulta_de_equipo", () => {
+  test("altojardin1 - Consulta de equipo con 2 arqueros, 4 defensores, 3 mediocampistas y 3 delanteros", () => {
+    const equipo = new Equipo("River", 10000000);
+
+    for (let i: number = 0; i < 2; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 3, new Arquero()));
+    }
+
+    for (let i: number = 0; i < 4; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 3, new Defensor()));
+    }
+
+    for (let i: number = 0; i < 3; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 3, new Mediocampista()));
+    }
+
+    for (let i: number = 0; i < 3; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 3, new Delantero()));
+    }
+
+    const poderOfensivo: number = equipo.calcularPoderOfensivo();
+    const poderDefensivo: number = equipo.calcularPoderDefensivo();
+
+    expect(poderOfensivo).toBe(40);
+    expect(poderDefensivo).toBe(43);
+  });
+
   test("altojardin2 - Consulta de equipo con 2 arqueros, 5 defensores, 4 mediocampistas y 2 delanteros", () => {
     const equipo = new Equipo("Boca", 10000000);
 
