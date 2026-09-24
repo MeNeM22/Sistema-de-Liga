@@ -9,6 +9,10 @@ export default class Liga {
     this.equipos = new Map<string, Equipo>();
   }
 
+  public getEquipo(nombre: string): Equipo | undefined {
+    return this.equipos.get(nombre.toLowerCase());
+  }
+
   public registrarEquipo(equipo: Equipo): void {
     const clave: string = equipo.getNombreEquipo().toLowerCase();
 

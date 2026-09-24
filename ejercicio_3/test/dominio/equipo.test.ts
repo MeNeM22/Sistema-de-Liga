@@ -1,3 +1,4 @@
+import Liga from "../../app/dominio/liga";
 import Jugador from "../../app/dominio/jugador";
 import Equipo from "../../app/dominio/equipo";
 import { Delantero, Defensor, Mediocampista, Arquero } from "../../app/dominio/posicion";
@@ -142,5 +143,24 @@ describe("Test Equipo: Estados de la plantilla", () => {
     const equipo = new Equipo("River", 100);
 
     expect(equipo.getEstado()).toBe("INCOMPLETO");
+  });
+
+  test("l4 - Consulta de equipo con estado completo", () => {
+    const liga = new Liga();
+    const racing = new Equipo("Racing", 1000);
+
+    for (let i: number = 0; i < 2; i++) {
+      racing.ficharJugador(new Jugador("Arquero", 10, "Argentina", 5, new Arquero()));
+    }
+
+    for (let i: number = 0; i < 30; i++) {
+      racing.ficharJugador(new Jugador("Delantero", 10, "Argentina", 5, new Delantero()));
+    }
+
+    liga.registrarEquipo(racing);
+
+    const equipoEncontrado: Equipo | undefined = liga.getEquipo("Racing");
+
+    expect(equipoEncontrado?.getEstado()).toBe("COMPLETO");
   });
 });

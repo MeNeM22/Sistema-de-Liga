@@ -38,20 +38,19 @@ export default class Equipo {
   }
 
   private plantillaEstaLlena(): boolean {
-    return this.getCantidadDeJugadores() >= Equipo.JUGADORES_MAX;
+    return this.getCantidadDeJugadores() == Equipo.JUGADORES_MAX;
   }
 
   public ficharJugador(jugador: Jugador): void {
     if (this.plantillaEstaLlena()) {
       throw new Error("La plantilla ya esta completa");
-    }
-    if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
+    } else if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
       throw new Error("El presupuesto fue excedido");
-    }
-    if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
+    } else if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
       throw new Error("Cantidad maxima de arqueros alcanzada");
     }
     this.plantilla.push(jugador);
+    this.estaCompleto();
   }
 
   private calcularPresupuestoEjecutado(valorJugadorNuevo: number): number {
@@ -91,5 +90,11 @@ export default class Equipo {
       }
     }
     return cantidadArqueros;
+  }
+
+  private estaCompleto(): void {
+    if (this.plantillaEstaLlena() && this.contarArquerosEnPlantilla() == 2) {
+      this.estado = "COMPLETO";
+    }
   }
 }
