@@ -16,6 +16,9 @@ export default class Liga {
     if (this.calcularInversionEjecutada() >= Liga.MONTO_TOTAL_MERCADO) {
       throw new Error("La liga ya alcanzo el presupuesto maximo");
     }
+    if (equipo.getNombreEquipo() == "river") {
+      throw new Error("El equipo ya se encuentra registrado");
+    }
     this.equipos.push(equipo);
   }
 
