@@ -8,11 +8,13 @@ export default class Equipo {
   private nombreEquipo: string;
   private presupuesto: number;
   private plantilla: Jugador[];
+  private estado: string;
 
   constructor(nombre: string, presupuestoInicial: number) {
     this.nombreEquipo = nombre;
     this.presupuesto = presupuestoInicial;
     this.plantilla = [];
+    this.estado = "INCOMPLETO";
   }
 
   public getNombreEquipo(): string {
@@ -25,6 +27,10 @@ export default class Equipo {
 
   public getPresupuesto(): number {
     return this.presupuesto;
+  }
+
+  public getEstado(): string {
+    return this.estado;
   }
 
   public getCantidadDeJugadores(): number {

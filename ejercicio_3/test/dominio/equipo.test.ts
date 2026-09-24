@@ -136,3 +136,11 @@ describe("Test Equipo: Limite de arqueros", () => {
     }).toThrow("Cantidad maxima de arqueros alcanzada");
   });
 });
+
+describe("Test Equipo: Estados de la plantilla", () => {
+  test("l2 - Consulta de equipo con estado INCOMPLETO", () => {
+    const equipo = new Equipo("River", 100);
+
+    expect(equipo.getEstado()).toBe("INCOMPLETO");
+  });
+});
