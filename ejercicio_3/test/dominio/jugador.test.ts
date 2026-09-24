@@ -1,9 +1,9 @@
 import Jugador from "../../app/dominio/jugador";
-
+import { Delantero, Defensor } from "../../app/dominio/posicion";
 describe("Test Jugador: Ingreso valores invalidos", () => {
   const valorMercado = 1000;
   const nacionalidad = "Argentina";
-  const posicion = "Delantero";
+  const posicion = new Delantero();
 
   test("Deberia devolver un error al ingresar una potencialidad mayor a 5", () => {
     const potencialidad = 6;
@@ -24,14 +24,14 @@ describe("Test Jugador: Ingreso valores validos", () => {
   const valorMercado = 1000;
   const nacionalidad = "Argentina";
   const potencialidad = 2;
-  const posicion = "Defensor";
+  const posicion = new Defensor();
 
   test("Deberia devolver cada campo instanciado del jugador", () => {
     const jugador = new Jugador(valorMercado, nacionalidad, potencialidad, posicion);
     expect(jugador.getValorMercado()).toBe(1000);
     expect(jugador.getNacionalidad()).toBe("Argentina");
     expect(jugador.getPotencialidad()).toBe(2);
-    expect(jugador.getPosicion()).toBe("Defensor");
+    expect(jugador.getPosicion()).toBeInstanceOf(Defensor);
   });
 
   test("Deberia devolver el poder ofensivo del jugador", () => {

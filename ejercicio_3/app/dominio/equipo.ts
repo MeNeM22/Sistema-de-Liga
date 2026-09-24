@@ -42,10 +42,7 @@ export default class Equipo {
     if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
       throw new Error("El presupuesto fue excedido");
     }
-    if (
-      jugador.getPosicion() === "Arquero" &&
-      this.contarJugadoresPorPosicion("Arquero") >= Equipo.ARQUEROS_REQUERIDOS
-    ) {
+    if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
       throw new Error("Cantidad maxima de arqueros alcanzada");
     }
     this.plantilla.push(jugador);
@@ -62,46 +59,31 @@ export default class Equipo {
     return valorTotalJugadores + cargasFiscales;
   }
 
-  private calcularPoderOfensivoTotalJugadores(): number {
-    let poderOfensivoTotalJugadores: number = 0;
-    for (const jugador of this.plantilla) {
-      poderOfensivoTotalJugadores += jugador.calcularPoderOfensivo() * 1;
-    }
-    return poderOfensivoTotalJugadores;
-  }
-
-  private calcularPoderDefensivoTotalJugadores(): number {
-    let poderDefensivoTotalJugadores: number = 0;
-    for (const jugador of this.plantilla) {
-      poderDefensivoTotalJugadores += jugador.calcularPoderDefensivo() * -1;
-    }
-    return poderDefensivoTotalJugadores;
-  }
-
-  private contarJugadoresPorPosicion(posicionBuscada: string): number {
-    let cantidadEnPosicionBuscada: number = 0;
-    for (const jugador of this.plantilla) {
-      if (jugador.getPosicion() == posicionBuscada) {
-        cantidadEnPosicionBuscada++;
-      }
-    }
-    return cantidadEnPosicionBuscada;
-  }
-
   public calcularPoderOfensivo(): number {
-    return (
-      this.contarJugadoresPorPosicion("Delantero") +
-      0.5 * this.contarJugadoresPorPosicion("Mediocampista") +
-      this.calcularPoderOfensivoTotalJugadores()
-    );
+    let poderOfensivoTotal: number = 0;
+    for (const jugador of this.plantilla) {
+      poderOfensivoTotal += jugador.calcularPoderOfensivo();
+      poderOfensivoTotal += jugador.getPosicion().poderOfensivoBase();
+    }
+    return poderOfensivoTotal;
   }
 
   public calcularPoderDefensivo(): number {
-    return (
-      this.contarJugadoresPorPosicion("Defensor") +
-      0.5 * this.contarJugadoresPorPosicion("Mediocampista") +
-      this.contarJugadoresPorPosicion("Arquero") +
-      this.calcularPoderDefensivoTotalJugadores()
-    );
+    let poderDefensivotal: number = 0;
+    for (const jugador of this.plantilla) {
+      poderDefensivotal += jugador.calcularPoderDefensivo() * -1;
+      poderDefensivotal += jugador.getPosicion().poderDefensivoBase();
+    }
+    return poderDefensivotal;
+  }
+
+  private contarArquerosEnPlantilla(): number {
+    let cantidadArqueros: number = 0;
+    for (const jugador of this.plantilla) {
+      if (jugador.getPosicion().esArquero()) {
+        cantidadArqueros++;
+      }
+    }
+    return cantidadArqueros;
   }
 }

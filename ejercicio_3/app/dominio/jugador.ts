@@ -1,4 +1,4 @@
-export type Posicion = "Arquero" | "Defensor" | "Mediocampista" | "Delantero";
+import Posicion from "../../app/dominio/posicion";
 export default class Jugador {
   private static readonly POTENCIALIDAD_MIN = 0;
   private static readonly POTENCIALIDAD_MAX = 5;
@@ -28,7 +28,7 @@ export default class Jugador {
   public getPotencialidad(): number {
     return this.potencialidad;
   }
-  public getPosicion(): string {
+  public getPosicion(): Posicion {
     return this.posicion;
   }
 
