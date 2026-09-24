@@ -9,14 +9,12 @@ describe("Test Equipo: Ingreso campos validos", () => {
   let jugador1: Jugador;
   let jugador2: Jugador;
   let jugador3: Jugador;
-  let jugador4: Jugador;
 
   beforeEach(() => {
     equipo = new Equipo(nombre, presupuesto);
     jugador1 = new Jugador(2000, "Argentina", 5, new Delantero());
     jugador2 = new Jugador(1500, "Brasil", 4, new Mediocampista());
     jugador3 = new Jugador(1000, "Uruguay", 3, new Defensor());
-    jugador4 = new Jugador(1000, "Chile", 2, new Arquero());
   });
 
   test("Deberia devolver un equipo estanciado con su nombre, 0 jugadores y su presupuesto inicial", () => {
@@ -34,13 +32,32 @@ describe("Test Equipo: Ingreso campos validos", () => {
     expect(equipo.getCantidadDeJugadores()).toBe(3);
     expect(equipo.getPresupuesto()).toBe(10000);
   });
+});
 
-  test("Deberia calcular correctamente el poder ofensivo", () => {
-    equipo.ficharJugador(jugador1);
-    equipo.ficharJugador(jugador2);
-    equipo.ficharJugador(jugador3);
-    equipo.ficharJugador(jugador4);
-    expect(equipo.calcularPoderDefensivo()).toBe(16.5);
+describe("Test Equipo: escenarios de prueba de consulta_de_equipo", () => {
+  test("altojardin2 - Consulta de equipo con 2 arqueros, 5 defensores, 4 mediocampistas y 2 delanteros", () => {
+    const equipo = new Equipo("Boca", 10000000);
+
+    for (let i: number = 0; i < 2; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 2, new Arquero()));
+    }
+
+    for (let i: number = 0; i < 5; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 4, new Defensor()));
+    }
+
+    for (let i: number = 0; i < 4; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 2, new Mediocampista()));
+    }
+
+    for (let i: number = 0; i < 2; i++) {
+      equipo.ficharJugador(new Jugador(1000, "Argentina", 3, new Delantero()));
+    }
+    const poderOfensivo: number = equipo.calcularPoderOfensivo();
+    const poderDefensivo: number = equipo.calcularPoderDefensivo();
+
+    expect(poderOfensivo).toBe(42);
+    expect(poderDefensivo).toBe(47);
   });
 });
 
