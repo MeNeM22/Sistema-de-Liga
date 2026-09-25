@@ -3,6 +3,7 @@ import Equipo from "../../app/dominio/equipo";
 
 import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
 import LigaPresupuestoExcedidoError from "../../app/dominio/liga-presupuesto-excedido-error";
+import LigaEquipoRepetidoError from "../../app/dominio/liga-equipo-repetido-error";
 
 describe("Test Liga: Límite de equipos", () => {
   test("Debería lanzar un error al intentar inscribir un equipo cuando ya hay 10 inscritos", () => {
@@ -44,7 +45,7 @@ describe("Test Liga: Límite de presupuesto", () => {
       liga.registrarEquipo(equipo1);
       expect(() => {
         liga.registrarEquipo(equipo2);
-      }).toThrow("El equipo ya se encuentra registrado");
+      }).toThrow(LigaEquipoRepetidoError);
     });
   });
 });

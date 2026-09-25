@@ -2,6 +2,7 @@ import Equipo from "../../app/dominio/equipo";
 
 import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
 import LigaPresupuestoExcedidoError from "../../app/dominio/liga-presupuesto-excedido-error";
+import LigaEquipoRepetidoError from "../../app/dominio/liga-equipo-repetido-error";
 
 export default class Liga {
   private static readonly EQUIPOS_MAX = 10;
@@ -29,7 +30,7 @@ export default class Liga {
     }
 
     if (this.equipos.has(clave)) {
-      throw new Error("El equipo ya se encuentra registrado");
+      throw new LigaEquipoRepetidoError();
     }
 
     this.equipos.set(clave, equipo);
