@@ -1,5 +1,7 @@
 import Equipo from "../../app/dominio/equipo";
 
+import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
+
 export default class Liga {
   private static readonly EQUIPOS_MAX = 10;
   private static readonly MONTO_TOTAL_MERCADO = 10000000;
@@ -18,7 +20,7 @@ export default class Liga {
     const inversionNueva: number = this.calcularInversionEjecutada() + equipo.getPresupuesto();
 
     if (this.cantidadEquiposRegistrados() >= Liga.EQUIPOS_MAX) {
-      throw new Error("La liga ya tiene el cupo maximo de 10 equipos");
+      throw new LigaCupoLlenoError();
     }
 
     if (inversionNueva > Liga.MONTO_TOTAL_MERCADO) {

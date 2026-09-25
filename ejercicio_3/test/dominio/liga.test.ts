@@ -1,6 +1,8 @@
 import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 
+import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
+
 describe("Test Liga: Límite de equipos", () => {
   test("Debería lanzar un error al intentar inscribir un equipo cuando ya hay 10 inscritos", () => {
     const liga = new Liga();
@@ -13,7 +15,7 @@ describe("Test Liga: Límite de equipos", () => {
 
     expect(() => {
       liga.registrarEquipo(equipoExtra);
-    }).toThrow("La liga ya tiene el cupo maximo de 10 equipos");
+    }).toThrow(LigaCupoLlenoError);
   });
 });
 
