@@ -19,16 +19,12 @@ export default class Equipo {
     return this.nombreEquipo;
   }
 
-  private getPlantilla(): Jugador[] {
-    return this.plantilla;
-  }
-
   public getPresupuesto(): number {
     return this.presupuesto;
   }
 
   public getCantidadDeJugadores(): number {
-    return this.getPlantilla().length;
+    return this.plantilla.length;
   }
 
   private plantillaEstaLlena(): boolean {
