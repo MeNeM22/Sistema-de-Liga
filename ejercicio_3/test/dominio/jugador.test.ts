@@ -1,5 +1,6 @@
 import Jugador from "../../app/dominio/jugador";
 import { Delantero, Defensor } from "../../app/dominio/posicion";
+import JugadorPotencialidadInvalidaError from "../../app/dominio/jugador-potencialidad-invalida-error";
 
 describe("Test Jugador: Ingreso valores invalidos", () => {
   const nombre = "Juan";
@@ -11,14 +12,14 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
     const potencialidad = 6;
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
-    }).toThrow("La potencialidad es invalida");
+    }).toThrow(JugadorPotencialidadInvalidaError);
   });
 
   test("Deberia devolver un error al ingresar una potencialidad menor a 0", () => {
     const potencialidad = -1;
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
-    }).toThrow("La potencialidad es invalida");
+    }).toThrow(JugadorPotencialidadInvalidaError);
   });
 });
 

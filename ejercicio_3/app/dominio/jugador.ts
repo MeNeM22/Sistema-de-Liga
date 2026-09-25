@@ -1,4 +1,5 @@
 import Posicion from "../../app/dominio/posicion";
+import JugadorPotencialidadInvalidaError from "./jugador-potencialidad-invalida-error";
 export default class Jugador {
   private static readonly POTENCIALIDAD_MIN = 0;
   private static readonly POTENCIALIDAD_MAX = 5;
@@ -11,7 +12,7 @@ export default class Jugador {
 
   constructor(nombre: string, valorMercado: number, nacionalidad: string, potencialidad: number, posicion: Posicion) {
     if (potencialidad < Jugador.POTENCIALIDAD_MIN || potencialidad > Jugador.POTENCIALIDAD_MAX) {
-      throw new Error("La potencialidad es invalida");
+      throw new JugadorPotencialidadInvalidaError();
     }
     this.nombre = nombre;
     this.valorMercado = valorMercado;
