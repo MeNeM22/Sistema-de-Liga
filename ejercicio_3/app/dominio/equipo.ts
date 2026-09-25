@@ -8,13 +8,11 @@ export default class Equipo {
   private nombreEquipo: string;
   private presupuesto: number;
   private plantilla: Jugador[];
-  private estado: string;
 
   constructor(nombre: string, presupuestoInicial: number) {
     this.nombreEquipo = nombre;
     this.presupuesto = presupuestoInicial;
     this.plantilla = [];
-    this.estado = "INCOMPLETO";
   }
 
   public getNombreEquipo(): string {
@@ -27,10 +25,6 @@ export default class Equipo {
 
   public getPresupuesto(): number {
     return this.presupuesto;
-  }
-
-  public getEstado(): string {
-    return this.estado;
   }
 
   public getCantidadDeJugadores(): number {
@@ -50,7 +44,6 @@ export default class Equipo {
       throw new Error("Cantidad maxima de arqueros alcanzada");
     }
     this.plantilla.push(jugador);
-    this.estaCompleto();
   }
 
   private calcularPresupuestoEjecutado(valorJugadorNuevo: number): number {
@@ -92,9 +85,7 @@ export default class Equipo {
     return cantidadArqueros;
   }
 
-  private estaCompleto(): void {
-    if (this.plantillaEstaLlena() && this.contarArquerosEnPlantilla() == 2) {
-      this.estado = "COMPLETO";
-    }
+  public estaCompleto(): boolean {
+    return this.getCantidadDeJugadores() === Equipo.JUGADORES_MAX && this.contarArquerosEnPlantilla() === 2;
   }
 }

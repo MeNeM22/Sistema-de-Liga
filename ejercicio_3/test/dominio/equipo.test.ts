@@ -142,7 +142,7 @@ describe("Test Equipo: Estados de la plantilla", () => {
   test("l2 - Consulta de equipo con estado INCOMPLETO", () => {
     const equipo = new Equipo("River", 100);
 
-    expect(equipo.getEstado()).toBe("INCOMPLETO");
+    expect(equipo.estaCompleto()).toBe(false);
   });
 
   test("l4 - Consulta de equipo con estado completo", () => {
@@ -161,6 +161,6 @@ describe("Test Equipo: Estados de la plantilla", () => {
 
     const equipoEncontrado: Equipo | undefined = liga.getEquipo("Racing");
 
-    expect(equipoEncontrado?.getEstado()).toBe("COMPLETO");
+    expect(equipoEncontrado?.estaCompleto()).toBe(true);
   });
 });
