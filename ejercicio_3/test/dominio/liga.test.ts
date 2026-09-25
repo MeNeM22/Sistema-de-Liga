@@ -2,6 +2,7 @@ import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 
 import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
+import LigaPresupuestoExcedidoError from "../../app/dominio/liga-presupuesto-excedido-error";
 
 describe("Test Liga: Límite de equipos", () => {
   test("Debería lanzar un error al intentar inscribir un equipo cuando ya hay 10 inscritos", () => {
@@ -31,7 +32,7 @@ describe("Test Liga: Límite de presupuesto", () => {
 
     expect(() => {
       liga.registrarEquipo(equipo3);
-    }).toThrow("La liga ya alcanzo el presupuesto maximo");
+    }).toThrow(LigaPresupuestoExcedidoError);
   });
 
   describe("Test Liga: Registro de equipos", () => {

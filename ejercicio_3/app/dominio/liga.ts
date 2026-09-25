@@ -1,6 +1,7 @@
 import Equipo from "../../app/dominio/equipo";
 
 import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
+import LigaPresupuestoExcedidoError from "../../app/dominio/liga-presupuesto-excedido-error";
 
 export default class Liga {
   private static readonly EQUIPOS_MAX = 10;
@@ -24,7 +25,7 @@ export default class Liga {
     }
 
     if (inversionNueva > Liga.MONTO_TOTAL_MERCADO) {
-      throw new Error("La liga ya alcanzo el presupuesto maximo");
+      throw new LigaPresupuestoExcedidoError();
     }
 
     if (this.equipos.has(clave)) {
