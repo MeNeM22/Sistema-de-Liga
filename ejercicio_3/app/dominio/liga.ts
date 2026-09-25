@@ -15,12 +15,13 @@ export default class Liga {
 
   public registrarEquipo(equipo: Equipo): void {
     const clave: string = equipo.getNombreEquipo().toLowerCase();
+    const inversionNueva: number = this.calcularInversionEjecutada() + equipo.getPresupuesto();
 
     if (this.cantidadEquiposRegistrados() >= Liga.EQUIPOS_MAX) {
       throw new Error("La liga ya tiene el cupo maximo de 10 equipos");
     }
 
-    if (this.calcularInversionEjecutada() >= Liga.MONTO_TOTAL_MERCADO) {
+    if (inversionNueva > Liga.MONTO_TOTAL_MERCADO) {
       throw new Error("La liga ya alcanzo el presupuesto maximo");
     }
 
