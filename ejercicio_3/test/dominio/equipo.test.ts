@@ -2,6 +2,7 @@ import Liga from "../../app/dominio/liga";
 import Jugador from "../../app/dominio/jugador";
 import Equipo from "../../app/dominio/equipo";
 import { Delantero, Defensor, Mediocampista, Arquero } from "../../app/dominio/posicion";
+import EquipoPlantillaLlenaError from "../../app/dominio/equipo-plantilla-llena-error";
 
 describe("Test Equipo: Ingreso campos validos", () => {
   const nombre = "Barcelona fc";
@@ -104,7 +105,7 @@ describe("Test Equipo: Limite de plantilla", () => {
 
     expect(() => {
       equipo.ficharJugador(jugadorExtra);
-    }).toThrow("La plantilla ya esta completa");
+    }).toThrow(EquipoPlantillaLlenaError);
   });
 });
 
