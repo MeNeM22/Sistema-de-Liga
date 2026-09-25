@@ -2,7 +2,9 @@ import Liga from "../../app/dominio/liga";
 import Jugador from "../../app/dominio/jugador";
 import Equipo from "../../app/dominio/equipo";
 import { Delantero, Defensor, Mediocampista, Arquero } from "../../app/dominio/posicion";
+
 import EquipoPlantillaLlenaError from "../../app/dominio/equipo-plantilla-llena-error";
+import EquipoPresupuestoExcedidoError from "../../app/dominio/equipo-presupuesto-excedido-error";
 
 describe("Test Equipo: Ingreso campos validos", () => {
   const nombre = "Barcelona fc";
@@ -119,7 +121,7 @@ describe("Test Equipo: Limite de presupuesto", () => {
     equipo.ficharJugador(jugador1);
     expect(() => {
       equipo.ficharJugador(jugador2);
-    }).toThrow("El presupuesto fue excedido");
+    }).toThrow(EquipoPresupuestoExcedidoError);
   });
 });
 

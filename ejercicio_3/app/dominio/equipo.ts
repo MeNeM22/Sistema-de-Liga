@@ -1,5 +1,6 @@
 import Jugador from "../../app/dominio/jugador";
 import EquipoPlantillaLlenaError from "../../app/dominio/equipo-plantilla-llena-error";
+import EquipoPresupuestoExcedidoError from "../../app/dominio/equipo-presupuesto-excedido-error";
 
 export default class Equipo {
   private static readonly JUGADORES_MAX = 32;
@@ -36,7 +37,7 @@ export default class Equipo {
     if (this.plantillaEstaLlena()) {
       throw new EquipoPlantillaLlenaError();
     } else if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
-      throw new Error("El presupuesto fue excedido");
+      throw new EquipoPresupuestoExcedidoError(this.getPresupuesto());
     } else if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
       throw new Error("Cantidad maxima de arqueros alcanzada");
     }
