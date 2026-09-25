@@ -5,6 +5,7 @@ import { Delantero, Defensor, Mediocampista, Arquero } from "../../app/dominio/p
 
 import EquipoPlantillaLlenaError from "../../app/dominio/equipo-plantilla-llena-error";
 import EquipoPresupuestoExcedidoError from "../../app/dominio/equipo-presupuesto-excedido-error";
+import EquipoCantidadArquerosExcedidoError from "../../app/dominio/equipo-cantidad-arqueros-excedido-error";
 
 describe("Test Equipo: Ingreso campos validos", () => {
   const nombre = "Barcelona fc";
@@ -137,7 +138,7 @@ describe("Test Equipo: Limite de arqueros", () => {
     equipo.ficharJugador(jugador2);
     expect(() => {
       equipo.ficharJugador(jugador3);
-    }).toThrow("Cantidad maxima de arqueros alcanzada");
+    }).toThrow(EquipoCantidadArquerosExcedidoError);
   });
 });
 
