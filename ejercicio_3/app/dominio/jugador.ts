@@ -1,5 +1,7 @@
 import Posicion from "../../app/dominio/posicion";
-import JugadorPotencialidadInvalidaError from "./jugador-potencialidad-invalida-error";
+import JugadorPotencialidadInvalidaError from "../../app/dominio/jugador-potencialidad-invalida-error";
+import JugadorValorMercadoNegativoError from "../../app/dominio/jugador-valor-mercado-negativo-error";
+
 export default class Jugador {
   private static readonly POTENCIALIDAD_MIN = 0;
   private static readonly POTENCIALIDAD_MAX = 5;
@@ -14,9 +16,11 @@ export default class Jugador {
     if (potencialidad < Jugador.POTENCIALIDAD_MIN || potencialidad > Jugador.POTENCIALIDAD_MAX) {
       throw new JugadorPotencialidadInvalidaError();
     }
+
     if (valorMercado < 0) {
-      throw new Error("Valor mercado no puede ser negativo");
+      throw new JugadorValorMercadoNegativoError();
     }
+
     this.nombre = nombre;
     this.valorMercado = valorMercado;
     this.nacionalidad = nacionalidad;
