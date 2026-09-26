@@ -3,6 +3,7 @@ import Jugador from "../../app/dominio/jugador";
 import EquipoPlantillaLlenaError from "../../app/dominio/equipo-plantilla-llena-error";
 import EquipoPresupuestoExcedidoError from "../../app/dominio/equipo-presupuesto-excedido-error";
 import EquipoCantidadArquerosExcedidoError from "../../app/dominio/equipo-cantidad-arqueros-excedido-error";
+import EquipoPresupuestoInicialNegativoError from "../../app/dominio/equipo-presupuesto-inicial-negativo-error";
 
 export default class Equipo {
   private static readonly JUGADORES_MAX = 32;
@@ -15,7 +16,7 @@ export default class Equipo {
 
   constructor(nombre: string, presupuestoInicial: number) {
     if (presupuestoInicial < 0) {
-      throw new Error("El presupuesto inicial no debe ser negativo");
+      throw new EquipoPresupuestoInicialNegativoError();
     }
     this.nombreEquipo = nombre;
     this.presupuesto = presupuestoInicial;
