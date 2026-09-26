@@ -4,7 +4,6 @@ import { Delantero, Defensor } from "../../app/dominio/posicion";
 import JugadorPotencialidadInvalidaError from "../../app/dominio/jugador-potencialidad-invalida-error";
 import JugadorValorMercadoNegativoError from "../../app/dominio/jugador-valor-mercado-negativo-error";
 
-
 describe("Test Jugador: Ingreso valores invalidos", () => {
   const nombre = "Juan";
   const nacionalidad = "Argentina";
