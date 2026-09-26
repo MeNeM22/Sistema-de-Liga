@@ -14,6 +14,9 @@ export default class Jugador {
     if (potencialidad < Jugador.POTENCIALIDAD_MIN || potencialidad > Jugador.POTENCIALIDAD_MAX) {
       throw new JugadorPotencialidadInvalidaError();
     }
+    if (valorMercado < 0) {
+      throw new Error("Valor mercado no puede ser negativo");
+    }
     this.nombre = nombre;
     this.valorMercado = valorMercado;
     this.nacionalidad = nacionalidad;

@@ -4,12 +4,12 @@ import JugadorPotencialidadInvalidaError from "../../app/dominio/jugador-potenci
 
 describe("Test Jugador: Ingreso valores invalidos", () => {
   const nombre = "Juan";
-  const valorMercado = 1000;
   const nacionalidad = "Argentina";
   const posicion = new Delantero();
 
   test("Deberia devolver un error al ingresar una potencialidad mayor a 5", () => {
     const potencialidad = 6;
+    const valorMercado = 1000;
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
     }).toThrow(JugadorPotencialidadInvalidaError);
@@ -17,9 +17,18 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
 
   test("Deberia devolver un error al ingresar una potencialidad menor a 0", () => {
     const potencialidad = -1;
+    const valorMercado = 1000;
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
     }).toThrow(JugadorPotencialidadInvalidaError);
+  });
+
+  test("Deberia devolver un error al ingresar un valor de mercado negativo", () => {
+    const potencialidad = 2;
+    const valorMercado = -1;
+    expect(() => {
+      new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
+    }).toThrow("Valor mercado no puede ser negativo");
   });
 });
 
