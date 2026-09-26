@@ -14,6 +14,9 @@ export default class Equipo {
   private plantilla: Jugador[];
 
   constructor(nombre: string, presupuestoInicial: number) {
+    if (presupuestoInicial < 0) {
+      throw new Error("El presupuesto inicial no debe ser negativo");
+    }
     this.nombreEquipo = nombre;
     this.presupuesto = presupuestoInicial;
     this.plantilla = [];

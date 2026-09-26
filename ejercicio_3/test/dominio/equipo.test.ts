@@ -112,17 +112,27 @@ describe("Test Equipo: Limite de plantilla", () => {
   });
 });
 
-describe("Test Equipo: Limite de presupuesto", () => {
+describe("Test Equipo: presupuesto", () => {
   test("Deberia devolver un error al intentar fichar un jugador si excede el presupuesto del equipo", () => {
     const nombre = "Racing";
     const presupuesto = 100;
     const equipo = new Equipo(nombre, presupuesto);
     const jugador1 = new Jugador("Jugador", 80, "Argentina", 3, new Delantero());
     const jugador2 = new Jugador("Jugador", 30, "Brasil", 2, new Defensor());
+
     equipo.ficharJugador(jugador1);
     expect(() => {
       equipo.ficharJugador(jugador2);
     }).toThrow(EquipoPresupuestoExcedidoError);
+  });
+
+  test("Deberia devolver un error al intentar crear inicializar un equipo con presupuesto negativo", () => {
+    const nombre = "Racing";
+    const presupuesto = -100;
+
+    expect(() => {
+      new Equipo(nombre, presupuesto);
+    }).toThrow("El presupuesto inicial no debe ser negativo");
   });
 });
 
@@ -134,8 +144,10 @@ describe("Test Equipo: Limite de arqueros", () => {
     const jugador1 = new Jugador("Jugador", 80, "Argentina", 3, new Arquero());
     const jugador2 = new Jugador("Jugador", 30, "Brasil", 2, new Arquero());
     const jugador3 = new Jugador("Jugador", 30, "Chile", 2, new Arquero());
+
     equipo.ficharJugador(jugador1);
     equipo.ficharJugador(jugador2);
+
     expect(() => {
       equipo.ficharJugador(jugador3);
     }).toThrow(EquipoCantidadArquerosExcedidoError);
