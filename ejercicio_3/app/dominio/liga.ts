@@ -36,6 +36,10 @@ export default class Liga {
     this.equipos.set(clave, equipo);
   }
 
+  public obtenerEquipos(): Equipo[] {
+    return Array.from(this.equipos.values());
+  }
+
   private cantidadEquiposRegistrados(): number {
     return this.equipos.size;
   }
