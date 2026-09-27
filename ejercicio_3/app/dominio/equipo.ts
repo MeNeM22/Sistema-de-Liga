@@ -35,6 +35,10 @@ export default class Equipo {
     return this.plantilla.length;
   }
 
+  public getPlantilla(): Jugador[] {
+    return [...this.plantilla];
+  }
+
   private plantillaEstaLlena(): boolean {
     return this.getCantidadDeJugadores() == Equipo.JUGADORES_MAX;
   }
