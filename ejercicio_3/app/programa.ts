@@ -85,6 +85,13 @@ app.get("/equipos", async (req: Request, res: Response) => {
   res.status(200).json(listaEquipos);
 });
 
+app.get("/equipos/:id_equipo", async (req: Request, res: Response) => {
+  const idEquipo = req.params.id_equipo;
+  const dtoEquipo = await sistemaLiga.consultarEquipo(idEquipo);
+
+  res.status(200).json(dtoEquipo);
+});
+
 const server = app
   .listen(port, () => {
     console.log("El servidor está corriendo en el puerto: ", port);

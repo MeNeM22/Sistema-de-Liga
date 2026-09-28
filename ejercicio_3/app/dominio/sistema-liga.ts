@@ -64,4 +64,26 @@ export default class SistemaLiga {
       estado: equipo.estaCompleto() ? "COMPLETO" : "INCOMPLETO",
     }));
   }
+
+  public async consultarEquipo(idEquipo: string) {
+    const liga = await this.repositorioLiga.obtenerLiga();
+    const equipoBuscado = liga.obtenerEquipoPorID(idEquipo);
+    return {
+      id: equipoBuscado.id,
+      nombre: equipoBuscado.getNombreEquipo(),
+      presupuesto: equipoBuscado.getPresupuesto(),
+      presupuesto_ejecutado: equipoBuscado.getPresupuestoEjecutado(),
+      estado: equipoBuscado.estaCompleto() ? "COMPLETO" : "INCOMPLETO",
+      jugadores: equipoBuscado.getPlantilla().map((jugador: any) => ({
+        id: jugador.id,
+        nombre: jugador.nombre,
+        nacionalidad: jugador.nacionalidad,
+        posicion: jugador.getPosicion().constructor.name.toLowerCase(),
+        valor_de_mercado: jugador.getValorMercado(),
+        potencialidad: jugador.potencialidad,
+      })),
+      poder_defensivo: equipoBuscado.calcularPoderDefensivo(),
+      poder_ofensivo: equipoBuscado.calcularPoderOfensivo(),
+    };
+  }
 }

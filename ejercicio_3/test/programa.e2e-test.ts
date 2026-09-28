@@ -118,3 +118,41 @@ describe("GET /equipos", () => {
     expect(equipoRacing.estado).toEqual("COMPLETO");
   });
 });
+
+describe("GET /equipos/:id", () => {
+  test("Deberia consultar un equipo especifico con su plantilla y poderes calculados", async () => {
+    const resEquipo = await requestWithSupertest.post("/equipos").send({ nombre: "Los Malos", presupuesto: 34000 });
+    const idEquipo = resEquipo.body.id;
+
+    for (let i = 0; i < 2; i++) {
+      await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+        nombre: `Arquero ${i}`,
+        nacionalidad: "argentino",
+        posicion: "arquero",
+        valor_de_mercado: 10,
+        potencialidad: 0,
+      });
+    }
+
+    for (let i = 0; i < 30; i++) {
+      await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+        nombre: `Delantero ${i}`,
+        nacionalidad: "argentino",
+        posicion: "delantero",
+        valor_de_mercado: 10,
+        potencialidad: 0,
+      });
+    }
+
+    const respuesta = await requestWithSupertest.get(`/equipos/${idEquipo}`);
+
+    expect(respuesta.status).toEqual(200);
+    expect(respuesta.body.id).toEqual(idEquipo);
+    expect(respuesta.body.nombre).toEqual("Los Malos");
+    expect(respuesta.body.estado).toEqual("COMPLETO");
+    expect(Array.isArray(respuesta.body.jugadores)).toBe(true);
+    expect(respuesta.body.jugadores.length).toEqual(32);
+    expect(respuesta.body.poder_ofensivo).toEqual(30);
+    expect(respuesta.body.poder_defensivo).toEqual(2);
+  });
+});
