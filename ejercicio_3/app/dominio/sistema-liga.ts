@@ -2,6 +2,7 @@ import Equipo from "../../app/dominio/equipo";
 import { IRepositorioLiga } from "../../app/dominio/puerto-repositorio-liga";
 import Posicion from "../../app/dominio/posicion";
 import Jugador from "./jugador";
+import { Arquero, Defensor, Mediocampista, Delantero } from "../../app/dominio/posicion";
 
 export default class SistemaLiga {
   private repositorioLiga: IRepositorioLiga;
@@ -21,21 +22,29 @@ export default class SistemaLiga {
     return nuevoEquipo;
   }
 
-  public async ficharJugador(
-    nombreEquipo: string,
+  public async ficharJugadorPorIdEquipo(
+    idEquipo: string,
     nombreJugador: string,
     valorMercado: number,
     nacionalidad: string,
     potencialidad: number,
-    posicion: Posicion,
+    posicionString: string,
   ): Promise<Jugador> {
     const liga = await this.repositorioLiga.obtenerLiga();
-    const equipo = liga.getEquipo(nombreEquipo);
-    const nuevoJugador = new Jugador(nombreJugador, valorMercado, nacionalidad, potencialidad, posicion);
+    const equipo = liga.obtenerEquipoPorID(idEquipo);
 
-    if (!equipo) {
-      throw new Error(`El equipo ${nombreEquipo} no existe en la liga`);
-    }
+    let posicionObjeto: Posicion;
+    const posNormalizada = posicionString.toLowerCase();
+
+    if (posNormalizada === "arquero") {
+      posicionObjeto = new Arquero();
+    } else if (posNormalizada === "defensor") {
+      posicionObjeto = new Defensor();
+    } else if (posNormalizada === "mediocampista") {
+      posicionObjeto = new Mediocampista();
+    } else posicionObjeto = new Delantero();
+
+    const nuevoJugador = new Jugador(nombreJugador, valorMercado, nacionalidad, potencialidad, posicionObjeto);
 
     equipo.ficharJugador(nuevoJugador);
 

@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import SistemaLiga from "./dominio/sistema-liga";
 import RepositorioLiga from "./adaptadores/repositorio-liga";
+import { Arquero, Defensor, Mediocampista, Delantero } from "./dominio/posicion";
 
 const app = express();
 const port = 3000;
@@ -29,10 +30,11 @@ app.get("/", async (req: Request, res: Response) => {
 
 app.post("/equipos", async (req: Request, res: Response) => {
   try {
-    const nuevoEquipo = await sistemaLiga.registrarEquipo(req.body.nombre, req.body.presupuesto);
-    res.status(200).json({
-      nombre: nuevoEquipo.getNombreEquipo(),
-      presupuesto: nuevoEquipo.getPresupuesto(),
+    const respuesta = await sistemaLiga.registrarEquipo(req.body.nombre, req.body.presupuesto);
+    res.status(201).json({
+      id: respuesta.id,
+      nombre: respuesta.getNombreEquipo(),
+      presupuesto: respuesta.getPresupuesto(),
     });
   } catch (error: any) {
     res.status(400).json({
@@ -41,11 +43,39 @@ app.post("/equipos", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/equipos/jugadores", async (req: Request, res: Response) => {
-  res.status(200).json({
-    nombre: "Diego Milito",
-    valor: 15000,
-    nacionalidad: "Argentina",
+app.post("/equipos/:id_equipo/jugadores", async (req: Request, res: Response) => {
+  const idEquipo = req.params.id_equipo;
+  const { nombre, valor_de_mercado, nacionalidad, potencialidad, posicion } = req.body;
+
+  const resultado = await sistemaLiga.ficharJugadorPorIdEquipo(
+    idEquipo,
+    nombre,
+    valor_de_mercado,
+    nacionalidad,
+    potencialidad,
+    posicion,
+  );
+
+  const objetoPosicion = resultado.getPosicion();
+  let stringPosicion = "";
+
+  if (objetoPosicion instanceof Arquero) {
+    stringPosicion = "arquero";
+  } else if (objetoPosicion instanceof Defensor) {
+    stringPosicion = "defensor";
+  } else if (objetoPosicion instanceof Mediocampista) {
+    stringPosicion = "mediocampista";
+  } else if (objetoPosicion instanceof Delantero) {
+    stringPosicion = "delantero";
+  }
+
+  res.status(201).json({
+    id: resultado.id,
+    nombre: resultado.getNombre(),
+    nacionalidad: resultado.getNacionalidad(),
+    posicion: stringPosicion,
+    valor_de_mercado: resultado.getValorMercado(),
+    potencialidad: resultado.getPotencialidad(),
   });
 });
 

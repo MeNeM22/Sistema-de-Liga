@@ -11,6 +11,7 @@ export default class Jugador {
   private nacionalidad: string;
   private potencialidad: number;
   private posicion: Posicion;
+  public id!: string;
 
   constructor(nombre: string, valorMercado: number, nacionalidad: string, potencialidad: number, posicion: Posicion) {
     if (potencialidad < Jugador.POTENCIALIDAD_MIN || potencialidad > Jugador.POTENCIALIDAD_MAX) {

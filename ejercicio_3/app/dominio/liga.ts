@@ -51,4 +51,14 @@ export default class Liga {
     }
     return inversionTotal;
   }
+
+  public obtenerEquipoPorID(id: string): Equipo {
+    const equipos = this.obtenerEquipos();
+    for (const equipo of equipos) {
+      if (equipo.id === id) {
+        return equipo;
+      }
+    }
+    throw new Error(`El equipo ${id} no existe en la liga`);
+  }
 }

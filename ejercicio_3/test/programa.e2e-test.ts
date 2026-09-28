@@ -17,7 +17,7 @@ describe("POST /alumnos", () => {
   test("Deberia devolver estado OK e incluir los datos del equipo creado en la respuesta", async () => {
     const respuesta = await requestWithSupertest.post("/equipos").send({ nombre: "San Miguel", presupuesto: 10000 });
 
-    expect(respuesta.status).toEqual(200);
+    expect(respuesta.status).toEqual(201);
     expect(respuesta.body).toBeDefined();
     expect(respuesta.body.nombre).toEqual("San Miguel");
     expect(respuesta.body.presupuesto).toEqual(10000);
@@ -32,22 +32,25 @@ describe("POST /alumnos", () => {
 });
 
 describe("POST /equipos/jugadores", () => {
-  test("Deberia fichar un jugador en un equipo existente y devolver estado 200", async () => {
-    await requestWithSupertest.post("/equipos").send({ nombre: "Racing", presupuesto: 500000 });
+  test("Deberia fichar un jugador en un equipo existente y devolver estado 201", async () => {
+    const respuestaEquipo = await requestWithSupertest.post("/equipos").send({ nombre: "Racing", presupuesto: 500000 });
 
-    const respuesta = await requestWithSupertest.post("/equipos/jugadores").send({
-      nombreEquipo: "Racing",
-      nombreJugador: "Diego Milito",
-      valor: 15000,
-      nacionalidad: "Argentina",
-      potencial: 95,
-      tipoPosicion: "Delantero",
+    const idEquipo = respuestaEquipo.body.id;
+
+    const respuestaJugador = await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+      nombre: "leo perez",
+      nacionalidad: "argentino",
+      posicion: "defensor",
+      valor_de_mercado: 100,
+      potencialidad: 1,
     });
 
-    expect(respuesta.status).toEqual(200);
-    expect(respuesta.body).toBeDefined();
-    expect(respuesta.body.nombre).toEqual("Diego Milito");
-    expect(respuesta.body.valor).toEqual(15000);
-    expect(respuesta.body.nacionalidad).toEqual("Argentina");
+    expect(respuestaJugador.status).toEqual(201);
+    expect(respuestaJugador.body.id).toBeDefined();
+    expect(respuestaJugador.body.nombre).toEqual("leo perez");
+    expect(respuestaJugador.body.nacionalidad).toEqual("argentino");
+    expect(respuestaJugador.body.posicion).toEqual("defensor");
+    expect(respuestaJugador.body.valor_de_mercado).toEqual(100);
+    expect(respuestaJugador.body.potencialidad).toEqual(1);
   });
 });

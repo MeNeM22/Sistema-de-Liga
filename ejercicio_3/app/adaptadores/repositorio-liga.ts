@@ -4,6 +4,7 @@ import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 import Jugador from "../../app/dominio/jugador";
 import Posicion, { Arquero, Defensor, Delantero, Mediocampista } from "../../app/dominio/posicion";
+import { v4 as newUuid } from "uuid";
 
 export default class RepositorioLiga implements IRepositorioLiga {
   private readonly CLAVE_LIGA = "liga_argentina";
@@ -32,6 +33,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
     const liga = new Liga();
     for (const equipoJson of equiposComoJson) {
       const equipo = new Equipo(equipoJson.nombreEquipo, equipoJson.presupuesto);
+      equipo.id = equipoJson.id;
 
       if (equipoJson.plantilla) {
         for (const jugadorJson of equipoJson.plantilla) {
@@ -45,6 +47,8 @@ export default class RepositorioLiga implements IRepositorioLiga {
             jugadorJson.potencialidad,
             posicion,
           );
+          jugador.id = jugadorJson.id;
+
           equipo.ficharJugador(jugador);
         }
       }
@@ -54,18 +58,30 @@ export default class RepositorioLiga implements IRepositorioLiga {
   }
 
   private mapearEquipo(equipo: Equipo) {
+    if (!equipo.id) {
+      equipo.id = `e:${newUuid().toString()}`;
+    }
     return {
+      id: equipo.id,
       nombreEquipo: equipo.getNombreEquipo(),
       presupuesto: equipo.getPresupuesto(),
-      plantilla: equipo.getPlantilla().map((jugador) => ({
-        nombre: jugador.getNombre(),
-        valorMercado: jugador.getValorMercado(),
-        nacionalidad: jugador.getNacionalidad(),
-        potencialidad: jugador.getPotencialidad(),
-        posicion: {
-          tipo: this.extraerTipoPosicion(jugador.getPosicion()),
-        },
-      })),
+      plantilla: equipo.getPlantilla().map((jugador) => this.mapearJugador(jugador)),
+    };
+  }
+
+  private mapearJugador(jugador: Jugador) {
+    if (!jugador.id) {
+      jugador.id = `j:${newUuid().toString()}`;
+    }
+    return {
+      id: jugador.id,
+      nombre: jugador.getNombre(),
+      valorMercado: jugador.getValorMercado(),
+      nacionalidad: jugador.getNacionalidad(),
+      potencialidad: jugador.getPotencialidad(),
+      posicion: {
+        tipo: this.extraerTipoPosicion(jugador.getPosicion()),
+      },
     };
   }
 
@@ -82,7 +98,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
     throw new Error("Posición no reconocida");
   }
 
-  private fabricarPosicion(tipoPosicion: string): Posicion {
+  public fabricarPosicion(tipoPosicion: string): Posicion {
     if (tipoPosicion === "Delantero") {
       return new Delantero();
     } else if (tipoPosicion === "Defensor") {

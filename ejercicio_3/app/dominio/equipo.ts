@@ -13,6 +13,7 @@ export default class Equipo {
   private nombreEquipo: string;
   private presupuesto: number;
   private plantilla: Jugador[];
+  public id!: string;
 
   constructor(nombre: string, presupuestoInicial: number) {
     if (presupuestoInicial < 0) {
