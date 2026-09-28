@@ -22,4 +22,11 @@ describe("POST /alumnos", () => {
     expect(respuesta.body.nombre).toEqual("San Miguel");
     expect(respuesta.body.presupuesto).toEqual(10000);
   });
+
+  test("Deberia devolver estado 400 y un mensaje de error si el presupuesto es invalido", async () => {
+    const respuesta = await requestWithSupertest.post("/equipos").send({ nombre: "Independiente", presupuesto: -5000 });
+
+    expect(respuesta.status).toEqual(400);
+    expect(respuesta.body.error).toBeDefined();
+  });
 });

@@ -28,11 +28,17 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.post("/equipos", async (req: Request, res: Response) => {
-  const nuevoEquipo = await sistemaLiga.registrarEquipo(req.body.nombre, req.body.presupuesto);
-  res.status(200).json({
-    nombre: nuevoEquipo.getNombreEquipo(),
-    presupuesto: nuevoEquipo.getPresupuesto(),
-  });
+  try {
+    const nuevoEquipo = await sistemaLiga.registrarEquipo(req.body.nombre, req.body.presupuesto);
+    res.status(200).json({
+      nombre: nuevoEquipo.getNombreEquipo(),
+      presupuesto: nuevoEquipo.getPresupuesto(),
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
 });
 
 const server = app
