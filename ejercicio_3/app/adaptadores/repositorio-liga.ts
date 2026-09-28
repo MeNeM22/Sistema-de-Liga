@@ -3,45 +3,14 @@ import clienteRedis from "./cliente-redis";
 import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 import Jugador from "../../app/dominio/jugador";
-import { Arquero, Defensor, Delantero, Mediocampista } from "../../app/dominio/posicion";
+import Posicion, { Arquero, Defensor, Delantero, Mediocampista } from "../../app/dominio/posicion";
 
 export default class RepositorioLiga implements IRepositorioLiga {
   private readonly CLAVE_LIGA = "liga_argentina";
 
   public guardar(liga: Liga): Promise<void> {
     return clienteRedis(async (cliente) => {
-      const equipos = liga.obtenerEquipos().map((equipo) => ({
-        nombreEquipo: equipo.getNombreEquipo(),
-        presupuesto: equipo.getPresupuesto(),
-
-        plantilla: equipo.getPlantilla().map((jugador) => {
-          const posicion = jugador.getPosicion();
-
-          let tipoPosicion: string;
-
-          if (posicion instanceof Arquero) {
-            tipoPosicion = "Arquero";
-          } else if (posicion instanceof Delantero) {
-            tipoPosicion = "Delantero";
-          } else if (posicion instanceof Defensor) {
-            tipoPosicion = "Defensor";
-          } else if (posicion instanceof Mediocampista) {
-            tipoPosicion = "Mediocampista";
-          } else {
-            throw new Error("Posición no reconocida");
-          }
-
-          return {
-            nombre: jugador.getNombre(),
-            valorMercado: jugador.getValorMercado(),
-            nacionalidad: jugador.getNacionalidad(),
-            potencialidad: jugador.getPotencialidad(),
-            posicion: {
-              tipo: tipoPosicion,
-            },
-          };
-        }),
-      }));
+      const equipos = liga.obtenerEquipos().map((equipo) => this.mapearEquipo(equipo));
 
       await cliente.set(this.CLAVE_LIGA, JSON.stringify(equipos));
     });
@@ -67,17 +36,8 @@ export default class RepositorioLiga implements IRepositorioLiga {
       if (equipoJson.plantilla) {
         for (const jugadorJson of equipoJson.plantilla) {
           const posicionJson = jugadorJson.posicion.tipo;
-          let posicion;
+          const posicion = this.fabricarPosicion(posicionJson);
 
-          if (posicionJson === "Delantero") {
-            posicion = new Delantero();
-          } else if (posicionJson === "Defensor") {
-            posicion = new Defensor();
-          } else if (posicionJson === "Mediocampista") {
-            posicion = new Mediocampista();
-          } else if (posicionJson === "Arquero") {
-            posicion = new Arquero();
-          }
           const jugador = new Jugador(
             jugadorJson.nombre,
             jugadorJson.valorMercado,
@@ -91,5 +51,47 @@ export default class RepositorioLiga implements IRepositorioLiga {
       liga.registrarEquipo(equipo);
     }
     return liga;
+  }
+
+  private mapearEquipo(equipo: Equipo) {
+    return {
+      nombreEquipo: equipo.getNombreEquipo(),
+      presupuesto: equipo.getPresupuesto(),
+      plantilla: equipo.getPlantilla().map((jugador) => ({
+        nombre: jugador.getNombre(),
+        valorMercado: jugador.getValorMercado(),
+        nacionalidad: jugador.getNacionalidad(),
+        potencialidad: jugador.getPotencialidad(),
+        posicion: {
+          tipo: this.extraerTipoPosicion(jugador.getPosicion()),
+        },
+      })),
+    };
+  }
+
+  private extraerTipoPosicion(posicion: Posicion): string {
+    if (posicion instanceof Delantero) {
+      return "Delantero";
+    } else if (posicion instanceof Defensor) {
+      return "Defensor";
+    } else if (posicion instanceof Mediocampista) {
+      return "Mediocampista";
+    } else if (posicion instanceof Arquero) {
+      return "Arquero";
+    }
+    throw new Error("Posición no reconocida");
+  }
+
+  private fabricarPosicion(tipoPosicion: string): Posicion {
+    if (tipoPosicion === "Delantero") {
+      return new Delantero();
+    } else if (tipoPosicion === "Defensor") {
+      return new Defensor();
+    } else if (tipoPosicion === "Mediocampista") {
+      return new Mediocampista();
+    } else if (tipoPosicion === "Arquero") {
+      return new Arquero();
+    }
+    throw new Error(`Posicion desconocida en base de datos`);
   }
 }
