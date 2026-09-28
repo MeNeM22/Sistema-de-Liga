@@ -86,4 +86,8 @@ export default class SistemaLiga {
       poder_ofensivo: equipoBuscado.calcularPoderOfensivo(),
     };
   }
+
+  public async resetearSistema(): Promise<void> {
+    await this.repositorioLiga.resetear();
+  }
 }

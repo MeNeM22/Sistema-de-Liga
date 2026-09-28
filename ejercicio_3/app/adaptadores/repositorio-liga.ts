@@ -110,4 +110,8 @@ export default class RepositorioLiga implements IRepositorioLiga {
     }
     throw new Error(`Posicion desconocida en base de datos`);
   }
+
+  public async resetear(): Promise<void> {
+    await clienteRedis((cliente) => cliente.flushDb());
+  }
 }

@@ -92,6 +92,12 @@ app.get("/equipos/:id_equipo", async (req: Request, res: Response) => {
   res.status(200).json(dtoEquipo);
 });
 
+app.post("/reset", async (req: Request, res: Response) => {
+  await sistemaLiga.resetearSistema();
+
+  res.status(200).json({ resultado: "ok" });
+});
+
 const server = app
   .listen(port, () => {
     console.log("El servidor está corriendo en el puerto: ", port);

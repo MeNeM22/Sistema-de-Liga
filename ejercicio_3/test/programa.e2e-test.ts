@@ -156,3 +156,19 @@ describe("GET /equipos/:id", () => {
     expect(respuesta.body.poder_defensivo).toEqual(2);
   });
 });
+
+describe("POST /reset", () => {
+  test("Deberia reiniciar el sistema a cero y devolver resultado ok", async () => {
+    await requestWithSupertest.post("/equipos").send({ nombre: "Boca Juniors", presupuesto: 10000 });
+
+    const respuestaReset = await requestWithSupertest.post("/reset");
+
+    expect(respuestaReset.status).toEqual(200);
+    expect(respuestaReset.body.resultado).toEqual("ok");
+
+    const respuestaEquipos = await requestWithSupertest.get("/equipos");
+
+    expect(respuestaEquipos.status).toEqual(200);
+    expect(respuestaEquipos.body.length).toEqual(0);
+  });
+});
