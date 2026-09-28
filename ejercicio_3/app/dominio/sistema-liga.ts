@@ -52,4 +52,16 @@ export default class SistemaLiga {
 
     return nuevoJugador;
   }
+
+  public async listarEquipos() {
+    const liga = await this.repositorioLiga.obtenerLiga();
+
+    return liga.obtenerEquipos().map((equipo) => ({
+      id: equipo.id,
+      nombre: equipo.getNombreEquipo(),
+      presupuesto: equipo.getPresupuesto(),
+      presupuesto_ejecutado: equipo.getPresupuestoEjecutado(),
+      estado: equipo.estaCompleto(),
+    }));
+  }
 }

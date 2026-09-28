@@ -54,3 +54,32 @@ describe("POST /equipos/jugadores", () => {
     expect(respuestaJugador.body.potencialidad).toEqual(1);
   });
 });
+
+describe("GET /equipos", () => {
+  test("Deberia listar los equipos con su presupuesto_ejecutado y estado", async () => {
+    const resEquipo = await requestWithSupertest.post("/equipos").send({ nombre: "san miguel", presupuesto: 10000 });
+
+    const idEquipo = resEquipo.body.id;
+
+    await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+      nombre: "leo perez",
+      nacionalidad: "argentino",
+      posicion: "defensor",
+      valor_de_mercado: 2000,
+      potencialidad: 1,
+    });
+
+    const respuesta = await requestWithSupertest.get("/equipos");
+
+    expect(respuesta.status).toEqual(200);
+    expect(Array.isArray(respuesta.body)).toBe(true);
+
+    const equipo = respuesta.body.find((e: any) => e.id === idEquipo);
+
+    expect(equipo).toBeDefined();
+    expect(equipo.nombre).toEqual("san miguel");
+    expect(equipo.presupuesto).toEqual(10000);
+    expect(equipo.presupuesto_ejecutado).toEqual(2200);
+    expect(equipo.estado).toBeDefined();
+  });
+});

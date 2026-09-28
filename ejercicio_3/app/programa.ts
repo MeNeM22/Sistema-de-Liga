@@ -79,6 +79,12 @@ app.post("/equipos/:id_equipo/jugadores", async (req: Request, res: Response) =>
   });
 });
 
+app.get("/equipos", async (req: Request, res: Response) => {
+  const listaEquipos = await sistemaLiga.listarEquipos();
+
+  res.status(200).json(listaEquipos);
+});
+
 const server = app
   .listen(port, () => {
     console.log("El servidor está corriendo en el puerto: ", port);
