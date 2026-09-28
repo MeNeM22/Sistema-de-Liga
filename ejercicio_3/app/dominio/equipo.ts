@@ -35,7 +35,7 @@ export default class Equipo {
   public ficharJugador(jugador: Jugador): void {
     if (this.plantillaEstaLlena()) {
       throw new EquipoPlantillaLlenaError();
-    } else if (this.calcularInversion(jugador.getValorMercado()) > this.presupuesto) {
+    } else if (this.calcularInversionFutura(jugador.getValorMercado()) > this.presupuesto) {
       throw new EquipoPresupuestoExcedidoError(this.getPresupuesto());
     } else if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
       throw new EquipoCantidadArquerosExcedidoError();
@@ -64,7 +64,7 @@ export default class Equipo {
     return this.getCantidadDeJugadores() == Equipo.JUGADORES_MAX;
   }
 
-  private calcularInversion(valorJugadorNuevo: number): number {
+  private calcularInversionFutura(valorJugadorNuevo: number): number {
     const costoNuevoJugador = valorJugadorNuevo + valorJugadorNuevo * Equipo.CARGAS_FISCALES;
 
     return this.getPresupuestoEjecutado() + costoNuevoJugador;
