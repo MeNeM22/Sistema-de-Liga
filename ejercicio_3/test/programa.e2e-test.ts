@@ -82,4 +82,39 @@ describe("GET /equipos", () => {
     expect(equipo.presupuesto_ejecutado).toEqual(2200);
     expect(equipo.estado).toEqual("INCOMPLETO");
   });
+
+  test("Escenario l4: Consulta de equipo con estado completo (Racing)", async () => {
+    const resEquipo = await requestWithSupertest.post("/equipos").send({ nombre: "Racing", presupuesto: 1000 });
+    const idEquipo = resEquipo.body.id;
+
+    for (let i = 0; i < 2; i++) {
+      await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+        nombre: `Arquero ${i}`,
+        nacionalidad: "argentino",
+        posicion: "arquero",
+        valor_de_mercado: 10,
+        potencialidad: 5,
+      });
+    }
+
+    for (let i = 0; i < 30; i++) {
+      await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+        nombre: `Delantero ${i}`,
+        nacionalidad: "argentino",
+        posicion: "delantero",
+        valor_de_mercado: 10,
+        potencialidad: 5,
+      });
+    }
+
+    const respuesta = await requestWithSupertest.get("/equipos");
+
+    expect(respuesta.status).toEqual(200);
+
+    const equipoRacing = respuesta.body.find((e: any) => e.id === idEquipo);
+
+    expect(equipoRacing).toBeDefined();
+    expect(equipoRacing.nombre).toEqual("Racing");
+    expect(equipoRacing.estado).toEqual("COMPLETO");
+  });
 });
