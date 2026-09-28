@@ -61,7 +61,7 @@ export default class SistemaLiga {
       nombre: equipo.getNombreEquipo(),
       presupuesto: equipo.getPresupuesto(),
       presupuesto_ejecutado: equipo.getPresupuestoEjecutado(),
-      estado: equipo.estaCompleto(),
+      estado: equipo.estaCompleto() ? "COMPLETO" : "INCOMPLETO",
     }));
   }
 }

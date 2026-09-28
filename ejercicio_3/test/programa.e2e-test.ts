@@ -80,6 +80,6 @@ describe("GET /equipos", () => {
     expect(equipo.nombre).toEqual("san miguel");
     expect(equipo.presupuesto).toEqual(10000);
     expect(equipo.presupuesto_ejecutado).toEqual(2200);
-    expect(equipo.estado).toBeDefined();
+    expect(equipo.estado).toEqual("INCOMPLETO");
   });
 });
