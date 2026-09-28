@@ -14,7 +14,7 @@ afterAll(() => {
 });
 
 describe("POST /alumnos", () => {
-  test("deberia devolver estado OK e incluir los datos del equipo creado en la respuesta", async () => {
+  test("Deberia devolver estado OK e incluir los datos del equipo creado en la respuesta", async () => {
     const respuesta = await requestWithSupertest.post("/equipos").send({ nombre: "San Miguel", presupuesto: 10000 });
 
     expect(respuesta.status).toEqual(200);

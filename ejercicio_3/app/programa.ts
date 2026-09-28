@@ -1,11 +1,15 @@
 import express, { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
+import SistemaLiga from "./dominio/sistema-liga";
+import RepositorioLiga from "./adaptadores/repositorio-liga";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+const sistemaLiga = new SistemaLiga(new RepositorioLiga());
 
 // Endpoint raíz: devuelve la versión del package.json
 app.get("/", (_req: Request, res: Response) => {
@@ -24,9 +28,10 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.post("/equipos", async (req: Request, res: Response) => {
+  const nuevoEquipo = await sistemaLiga.registrarEquipo(req.body.nombre, req.body.presupuesto);
   res.status(200).json({
-    nombre: "San Miguel",
-    presupuesto: 10000,
+    nombre: nuevoEquipo.getNombreEquipo(),
+    presupuesto: nuevoEquipo.getPresupuesto(),
   });
 });
 
