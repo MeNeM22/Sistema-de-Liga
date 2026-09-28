@@ -30,3 +30,24 @@ describe("POST /alumnos", () => {
     expect(respuesta.body.error).toBeDefined();
   });
 });
+
+describe("POST /equipos/jugadores", () => {
+  test("Deberia fichar un jugador en un equipo existente y devolver estado 200", async () => {
+    await requestWithSupertest.post("/equipos").send({ nombre: "Racing", presupuesto: 500000 });
+
+    const respuesta = await requestWithSupertest.post("/equipos/jugadores").send({
+      nombreEquipo: "Racing",
+      nombreJugador: "Diego Milito",
+      valor: 15000,
+      nacionalidad: "Argentina",
+      potencial: 95,
+      tipoPosicion: "Delantero",
+    });
+
+    expect(respuesta.status).toEqual(200);
+    expect(respuesta.body).toBeDefined();
+    expect(respuesta.body.nombre).toEqual("Diego Milito");
+    expect(respuesta.body.valor).toEqual(15000);
+    expect(respuesta.body.nacionalidad).toEqual("Argentina");
+  });
+});

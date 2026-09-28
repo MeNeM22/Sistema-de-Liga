@@ -41,6 +41,14 @@ app.post("/equipos", async (req: Request, res: Response) => {
   }
 });
 
+app.post("/equipos/jugadores", async (req: Request, res: Response) => {
+  res.status(200).json({
+    nombre: "Diego Milito",
+    valor: 15000,
+    nacionalidad: "Argentina",
+  });
+});
+
 const server = app
   .listen(port, () => {
     console.log("El servidor está corriendo en el puerto: ", port);
