@@ -32,6 +32,26 @@ export default class Equipo {
     return this.presupuesto;
   }
 
+  public ficharJugador(jugador: Jugador): void {
+    if (this.plantillaEstaLlena()) {
+      throw new EquipoPlantillaLlenaError();
+    } else if (this.calcularInversion(jugador.getValorMercado()) > this.presupuesto) {
+      throw new EquipoPresupuestoExcedidoError(this.getPresupuesto());
+    } else if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
+      throw new EquipoCantidadArquerosExcedidoError();
+    }
+    this.plantilla.push(jugador);
+  }
+
+  public getPresupuestoEjecutado(): number {
+    let valorTotalJugadores: number = 0;
+    for (const jugador of this.plantilla) {
+      valorTotalJugadores += jugador.getValorMercado();
+    }
+    const cargasFiscales = valorTotalJugadores * Equipo.CARGAS_FISCALES;
+    return valorTotalJugadores + cargasFiscales;
+  }
+
   public getCantidadDeJugadores(): number {
     return this.plantilla.length;
   }
@@ -44,26 +64,10 @@ export default class Equipo {
     return this.getCantidadDeJugadores() == Equipo.JUGADORES_MAX;
   }
 
-  public ficharJugador(jugador: Jugador): void {
-    if (this.plantillaEstaLlena()) {
-      throw new EquipoPlantillaLlenaError();
-    } else if (this.calcularPresupuestoEjecutado(jugador.getValorMercado()) > this.presupuesto) {
-      throw new EquipoPresupuestoExcedidoError(this.getPresupuesto());
-    } else if (jugador.getPosicion().esArquero() && this.contarArquerosEnPlantilla() >= Equipo.ARQUEROS_REQUERIDOS) {
-      throw new EquipoCantidadArquerosExcedidoError();
-    }
-    this.plantilla.push(jugador);
-  }
+  private calcularInversion(valorJugadorNuevo: number): number {
+    const costoNuevoJugador = valorJugadorNuevo + valorJugadorNuevo * Equipo.CARGAS_FISCALES;
 
-  private calcularPresupuestoEjecutado(valorJugadorNuevo: number): number {
-    let valorTotalJugadores: number = 0;
-    let cargasFiscales: number = 0;
-    for (const jugador of this.plantilla) {
-      valorTotalJugadores += jugador.getValorMercado();
-    }
-    valorTotalJugadores += valorJugadorNuevo;
-    cargasFiscales = valorTotalJugadores * Equipo.CARGAS_FISCALES;
-    return valorTotalJugadores + cargasFiscales;
+    return this.getPresupuestoEjecutado() + costoNuevoJugador;
   }
 
   public calcularPoderOfensivo(): number {
