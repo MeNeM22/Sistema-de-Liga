@@ -2,6 +2,7 @@ export default interface Posicion {
   poderOfensivoBase(): number;
   poderDefensivoBase(): number;
   esArquero(): boolean;
+  nombre(): string;
 }
 
 export class Delantero implements Posicion {
@@ -13,6 +14,9 @@ export class Delantero implements Posicion {
   }
   esArquero(): boolean {
     return false;
+  }
+  nombre(): string {
+    return "delantero";
   }
 }
 
@@ -26,6 +30,9 @@ export class Defensor implements Posicion {
   esArquero(): boolean {
     return false;
   }
+  nombre(): string {
+    return "defensor";
+  }
 }
 
 export class Mediocampista implements Posicion {
@@ -38,6 +45,9 @@ export class Mediocampista implements Posicion {
   esArquero(): boolean {
     return false;
   }
+  nombre(): string {
+    return "mediocampista";
+  }
 }
 
 export class Arquero implements Posicion {
@@ -49,5 +59,8 @@ export class Arquero implements Posicion {
   }
   esArquero(): boolean {
     return true;
+  }
+  nombre(): string {
+    return "arquero";
   }
 }

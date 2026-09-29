@@ -3,8 +3,8 @@ import clienteRedis from "./cliente-redis";
 import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 import Jugador from "../../app/dominio/jugador";
-import Posicion, { Arquero, Defensor, Delantero, Mediocampista } from "../../app/dominio/posicion";
 import { v4 as newUuid } from "uuid";
+import FabricaPosicion from "../../app/dominio/fabrica-de-posicion";
 
 export default class RepositorioLiga implements IRepositorioLiga {
   private readonly CLAVE_LIGA = "liga_argentina";
@@ -31,6 +31,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
 
   private deserializarLiga(equiposComoJson: any[]): Liga {
     const liga = new Liga();
+    const fabricaPosicion = new FabricaPosicion();
     for (const equipoJson of equiposComoJson) {
       const equipo = new Equipo(equipoJson.nombreEquipo, equipoJson.presupuesto);
       equipo.asignarId(equipoJson.id);
@@ -38,7 +39,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
       if (equipoJson.plantilla) {
         for (const jugadorJson of equipoJson.plantilla) {
           const posicionJson = jugadorJson.posicion.tipo;
-          const posicion = this.fabricarPosicion(posicionJson);
+          const posicion = fabricaPosicion.crear(posicionJson);
 
           const jugador = new Jugador(
             jugadorJson.nombre,
@@ -80,36 +81,9 @@ export default class RepositorioLiga implements IRepositorioLiga {
       nacionalidad: jugador.getNacionalidad(),
       potencialidad: jugador.getPotencialidad(),
       posicion: {
-        tipo: this.extraerTipoPosicion(jugador.getPosicion()),
+        tipo: jugador.getPosicion().nombre(),
       },
     };
-  }
-
-  public extraerTipoPosicion(posicion: Posicion): string {
-    if (posicion instanceof Delantero) {
-      return "delantero";
-    } else if (posicion instanceof Defensor) {
-      return "defensor";
-    } else if (posicion instanceof Mediocampista) {
-      return "mediocampista";
-    } else if (posicion instanceof Arquero) {
-      return "arquero";
-    }
-    throw new Error("Posición no reconocida");
-  }
-
-  public fabricarPosicion(tipoPosicion: string): Posicion {
-    const posicionNormalizado: string = tipoPosicion.toLowerCase();
-    if (posicionNormalizado === "delantero") {
-      return new Delantero();
-    } else if (posicionNormalizado === "defensor") {
-      return new Defensor();
-    } else if (posicionNormalizado === "mediocampista") {
-      return new Mediocampista();
-    } else if (posicionNormalizado === "arquero") {
-      return new Arquero();
-    }
-    throw new Error(`Posicion desconocida en base de datos`);
   }
 
   public async resetear(): Promise<void> {

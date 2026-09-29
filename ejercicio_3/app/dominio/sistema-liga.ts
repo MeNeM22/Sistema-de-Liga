@@ -1,6 +1,7 @@
 import Equipo from "../../app/dominio/equipo";
 import { IRepositorioLiga } from "../../app/dominio/puerto-repositorio-liga";
 import Jugador from "./jugador";
+import FabricaPosicion from "../../app/dominio/fabrica-de-posicion";
 
 export default class SistemaLiga {
   private repositorioLiga: IRepositorioLiga;
@@ -30,7 +31,10 @@ export default class SistemaLiga {
   ): Promise<Jugador> {
     const liga = await this.repositorioLiga.obtenerLiga();
     const equipo = liga.obtenerEquipoPorID(idEquipo);
-    const posicionObjeto = this.repositorioLiga.fabricarPosicion(posicionString);
+
+    const fabricaPosicion = new FabricaPosicion();
+
+    const posicionObjeto = fabricaPosicion.crear(posicionString);
     const nuevoJugador = new Jugador(nombreJugador, valorMercado, nacionalidad, potencialidad, posicionObjeto);
 
     equipo.ficharJugador(nuevoJugador);
@@ -65,7 +69,7 @@ export default class SistemaLiga {
         id: jugador.getId(),
         nombre: jugador.getNombre(),
         nacionalidad: jugador.getNacionalidad(),
-        posicion: jugador.getPosicion().constructor.name.toLowerCase(),
+        posicion: jugador.getPosicion().nombre(),
         valor_de_mercado: jugador.getValorMercado(),
         potencialidad: jugador.getPotencialidad(),
       })),

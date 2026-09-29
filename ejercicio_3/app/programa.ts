@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import SistemaLiga from "./dominio/sistema-liga";
 import RepositorioLiga from "./adaptadores/repositorio-liga";
-import { Arquero, Defensor, Mediocampista, Delantero } from "./dominio/posicion";
 
 const app = express();
 const port = 3000;
@@ -57,24 +56,11 @@ app.post("/equipos/:id_equipo/jugadores", async (req: Request, res: Response) =>
       posicion,
     );
 
-    const objetoPosicion = resultado.getPosicion();
-    let stringPosicion = "";
-
-    if (objetoPosicion instanceof Arquero) {
-      stringPosicion = "arquero";
-    } else if (objetoPosicion instanceof Defensor) {
-      stringPosicion = "defensor";
-    } else if (objetoPosicion instanceof Mediocampista) {
-      stringPosicion = "mediocampista";
-    } else if (objetoPosicion instanceof Delantero) {
-      stringPosicion = "delantero";
-    }
-
     res.status(201).json({
       id: resultado.getId(),
       nombre: resultado.getNombre(),
       nacionalidad: resultado.getNacionalidad(),
-      posicion: stringPosicion,
+      posicion: resultado.getPosicion().nombre(),
       valor_de_mercado: resultado.getValorMercado(),
       potencialidad: resultado.getPotencialidad(),
     });
