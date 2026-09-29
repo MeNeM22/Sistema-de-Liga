@@ -57,4 +57,27 @@ describe("SistemaLiga", () => {
       expect(equipoMock.getPlantilla()).toContain(jugadorFichado);
     });
   });
+
+  describe("listarEquipos", () => {
+    test("Deberia devolver un listado de equipos mapeados", async () => {
+      const ligaMock = new Liga();
+      const equipoMock = new Equipo("Boca Juniors", 1000);
+      equipoMock.asignarId("eq-boca");
+      ligaMock.registrarEquipo(equipoMock);
+
+      mockRepositorioLiga.obtenerLiga.mockResolvedValue(ligaMock);
+
+      const listado = await sistemaLiga.listarEquipos();
+
+      expect(mockRepositorioLiga.obtenerLiga).toHaveBeenCalledTimes(1);
+      expect(listado).toHaveLength(1);
+      expect(listado[0]).toEqual({
+        id: "eq-boca",
+        nombre: "Boca Juniors",
+        presupuesto: 1000,
+        presupuesto_ejecutado: 0,
+        estado: "INCOMPLETO",
+      });
+    });
+  });
 });
