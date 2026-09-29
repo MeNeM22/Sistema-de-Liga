@@ -55,7 +55,7 @@ export default class Liga {
   public obtenerEquipoPorID(id: string): Equipo {
     const equipos = this.obtenerEquipos();
     for (const equipo of equipos) {
-      if (equipo.id === id) {
+      if (equipo.getId() === id) {
         return equipo;
       }
     }

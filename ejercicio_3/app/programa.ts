@@ -32,7 +32,7 @@ app.post("/equipos", async (req: Request, res: Response) => {
   try {
     const respuesta = await sistemaLiga.registrarEquipo(req.body.nombre, req.body.presupuesto);
     res.status(201).json({
-      id: respuesta.id,
+      id: respuesta.getId(),
       nombre: respuesta.getNombreEquipo(),
       presupuesto: respuesta.getPresupuesto(),
     });

@@ -44,7 +44,7 @@ export default class SistemaLiga {
     const liga = await this.repositorioLiga.obtenerLiga();
 
     return liga.obtenerEquipos().map((equipo) => ({
-      id: equipo.id,
+      id: equipo.getId(),
       nombre: equipo.getNombreEquipo(),
       presupuesto: equipo.getPresupuesto(),
       presupuesto_ejecutado: equipo.getPresupuestoEjecutado(),
@@ -56,7 +56,7 @@ export default class SistemaLiga {
     const liga = await this.repositorioLiga.obtenerLiga();
     const equipoBuscado = liga.obtenerEquipoPorID(idEquipo);
     return {
-      id: equipoBuscado.id,
+      id: equipoBuscado.getId(),
       nombre: equipoBuscado.getNombreEquipo(),
       presupuesto: equipoBuscado.getPresupuesto(),
       presupuesto_ejecutado: equipoBuscado.getPresupuestoEjecutado(),

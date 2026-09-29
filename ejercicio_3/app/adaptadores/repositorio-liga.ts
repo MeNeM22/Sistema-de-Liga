@@ -33,7 +33,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
     const liga = new Liga();
     for (const equipoJson of equiposComoJson) {
       const equipo = new Equipo(equipoJson.nombreEquipo, equipoJson.presupuesto);
-      equipo.id = equipoJson.id;
+      equipo.asignarId(equipoJson.id);
 
       if (equipoJson.plantilla) {
         for (const jugadorJson of equipoJson.plantilla) {
@@ -58,11 +58,11 @@ export default class RepositorioLiga implements IRepositorioLiga {
   }
 
   private mapearEquipo(equipo: Equipo) {
-    if (!equipo.id) {
-      equipo.id = `e:${newUuid().toString()}`;
+    if (!equipo.getId()) {
+      equipo.asignarId(`e:${newUuid().toString()}`);
     }
     return {
-      id: equipo.id,
+      id: equipo.getId(),
       nombreEquipo: equipo.getNombreEquipo(),
       presupuesto: equipo.getPresupuesto(),
       plantilla: equipo.getPlantilla().map((jugador) => this.mapearJugador(jugador)),

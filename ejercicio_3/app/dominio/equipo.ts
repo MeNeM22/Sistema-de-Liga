@@ -13,7 +13,7 @@ export default class Equipo {
   private nombreEquipo: string;
   private presupuesto: number;
   private plantilla: Jugador[];
-  public id!: string;
+  private id?: string;
 
   constructor(nombre: string, presupuestoInicial: number) {
     if (presupuestoInicial < 0) {
@@ -100,5 +100,17 @@ export default class Equipo {
 
   public estaCompleto(): boolean {
     return this.getCantidadDeJugadores() === Equipo.JUGADORES_MAX && this.contarArquerosEnPlantilla() === 2;
+  }
+
+  public getId(): string | undefined {
+    return this.id;
+  }
+
+  public asignarId(id: string): void {
+    if (this.id !== undefined) {
+      return;
+    }
+
+    this.id = id;
   }
 }
