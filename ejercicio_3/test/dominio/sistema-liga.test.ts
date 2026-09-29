@@ -80,4 +80,24 @@ describe("SistemaLiga", () => {
       });
     });
   });
+
+  describe("consultarEquipo", () => {
+    test("Deberia devolver el detalle completo de un equipo y sus poderes calculados", async () => {
+      const ligaMock = new Liga();
+      const equipoMock = new Equipo("Racing Club", 2000);
+      equipoMock.asignarId("eq-racing");
+      ligaMock.registrarEquipo(equipoMock);
+
+      mockRepositorioLiga.obtenerLiga.mockResolvedValue(ligaMock);
+
+      const detalles = await sistemaLiga.consultarEquipo("eq-racing");
+
+      expect(mockRepositorioLiga.obtenerLiga).toHaveBeenCalledTimes(1);
+      expect(detalles.id).toEqual("eq-racing");
+      expect(detalles.nombre).toEqual("Racing Club");
+      expect(detalles.jugadores).toEqual([]);
+      expect(detalles.poder_defensivo).toEqual(0);
+      expect(detalles.poder_ofensivo).toEqual(0);
+    });
+  });
 });
