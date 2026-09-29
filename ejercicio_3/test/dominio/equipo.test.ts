@@ -49,6 +49,14 @@ describe("Test Equipo: Ingreso campos invalidos", () => {
     }).toThrow("El nombre del equipo es invalido");
   });
 
+  test("Deberia lanzar un error si el nombre es un numero", () => {
+    const nombre: any = 23;
+    const presupuesto: number = 500;
+    expect(() => {
+      new Equipo(nombre, presupuesto);
+    }).toThrow("El nombre del equipo es invalido");
+  });
+
   test("Deberia devolver un error al intentar inicializar un equipo con presupuesto negativo", () => {
     const nombre = "Racing";
     const presupuesto = -100;

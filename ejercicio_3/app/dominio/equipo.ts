@@ -20,7 +20,7 @@ export default class Equipo {
       throw new EquipoPresupuestoInicialNegativoError();
     }
 
-    if (nombre.trim() === "") {
+    if (typeof nombre !== "string" || nombre.trim() === "") {
       throw new Error("El nombre del equipo es invalido");
     }
 
