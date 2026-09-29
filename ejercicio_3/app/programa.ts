@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import SistemaLiga from "./dominio/sistema-liga";
 import RepositorioLiga from "./adaptadores/repositorio-liga";
+import LigaEquipoNoEncontradoError from "./dominio/clases-de-errores/liga-equipo-no-encontrado-error";
 
 const app = express();
 const port = 3000;
@@ -21,10 +22,6 @@ app.get("/", (_req: Request, res: Response) => {
   } catch (e) {
     res.status(500).json({ error: `No se pudo leer la versión: ${e}` });
   }
-});
-
-app.get("/", async (req: Request, res: Response) => {
-  res.json({});
 });
 
 app.post("/equipos", async (req: Request, res: Response) => {
@@ -65,16 +62,26 @@ app.post("/equipos/:id_equipo/jugadores", async (req: Request, res: Response) =>
       potencialidad: resultado.getPotencialidad(),
     });
   } catch (error: any) {
-    res.status(400).json({
-      error: error.message,
-    });
+    if (error instanceof LigaEquipoNoEncontradoError) {
+      res.status(404).json({ error: error.message });
+    } else {
+      res.status(400).json({
+        error: error.message,
+      });
+    }
   }
 });
 
 app.get("/equipos", async (req: Request, res: Response) => {
-  const listaEquipos = await sistemaLiga.listarEquipos();
+  try {
+    const listaEquipos = await sistemaLiga.listarEquipos();
 
-  res.status(200).json(listaEquipos);
+    res.status(200).json(listaEquipos);
+  } catch (error: any) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
 });
 
 app.get("/equipos/:id_equipo", async (req: Request, res: Response) => {
@@ -84,16 +91,22 @@ app.get("/equipos/:id_equipo", async (req: Request, res: Response) => {
 
     res.status(200).json(dtoEquipo);
   } catch (error: any) {
-    res.status(400).json({
+    res.status(404).json({
       error: error.message,
     });
   }
 });
 
 app.post("/reset", async (req: Request, res: Response) => {
-  await sistemaLiga.resetearSistema();
+  try {
+    await sistemaLiga.resetearSistema();
 
-  res.status(200).json({ resultado: "ok" });
+    res.status(200).json({ resultado: "ok" });
+  } catch (error: any) {
+    res.status(500).json({
+      error: error.message,
+    });
+  }
 });
 
 const server = app
