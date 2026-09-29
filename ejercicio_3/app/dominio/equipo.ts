@@ -49,7 +49,8 @@ export default class Equipo {
       valorTotalJugadores += jugador.getValorMercado();
     }
     const cargasFiscales = valorTotalJugadores * Equipo.CARGAS_FISCALES;
-    return valorTotalJugadores + cargasFiscales;
+    const total = valorTotalJugadores + cargasFiscales;
+    return Number(total.toFixed(2));
   }
 
   public getCantidadDeJugadores(): number {
@@ -66,8 +67,9 @@ export default class Equipo {
 
   private calcularInversionFutura(valorJugadorNuevo: number): number {
     const costoNuevoJugador = valorJugadorNuevo + valorJugadorNuevo * Equipo.CARGAS_FISCALES;
+    const totalFuturo = this.getPresupuestoEjecutado() + costoNuevoJugador;
 
-    return this.getPresupuestoEjecutado() + costoNuevoJugador;
+    return Number(totalFuturo.toFixed(2));
   }
 
   public calcularPoderOfensivo(): number {
