@@ -3,6 +3,7 @@ import Equipo from "../../app/dominio/equipo";
 import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
 import LigaPresupuestoExcedidoError from "../../app/dominio/liga-presupuesto-excedido-error";
 import LigaEquipoRepetidoError from "../../app/dominio/liga-equipo-repetido-error";
+import LigaEquipoNoEncontradoError from "../../app/dominio/liga-equipo-no-encontrado-error";
 
 export default class Liga {
   private static readonly EQUIPOS_MAX = 10;
@@ -59,6 +60,6 @@ export default class Liga {
         return equipo;
       }
     }
-    throw new Error(`El equipo ${id} no existe en la liga`);
+    throw new LigaEquipoNoEncontradoError(id);
   }
 }

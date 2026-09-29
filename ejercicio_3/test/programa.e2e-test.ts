@@ -182,6 +182,13 @@ describe("GET /equipos/:id", () => {
     expect(respuesta.body.poder_ofensivo).toEqual(30);
     expect(respuesta.body.poder_defensivo).toEqual(2);
   });
+
+  test("Deberia devolver un error al consultar un equipo que no existe", async () => {
+    const respuesta = await requestWithSupertest.get(`/equipos/2`);
+
+    expect(respuesta.status).toEqual(400);
+    expect(respuesta.body.error).toBeDefined();
+  });
 });
 
 describe("POST /reset", () => {

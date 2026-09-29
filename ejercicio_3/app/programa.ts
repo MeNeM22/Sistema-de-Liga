@@ -92,10 +92,16 @@ app.get("/equipos", async (req: Request, res: Response) => {
 });
 
 app.get("/equipos/:id_equipo", async (req: Request, res: Response) => {
-  const idEquipo = req.params.id_equipo;
-  const dtoEquipo = await sistemaLiga.consultarEquipo(idEquipo);
+  try {
+    const idEquipo = req.params.id_equipo;
+    const dtoEquipo = await sistemaLiga.consultarEquipo(idEquipo);
 
-  res.status(200).json(dtoEquipo);
+    res.status(200).json(dtoEquipo);
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
+  }
 });
 
 app.post("/reset", async (req: Request, res: Response) => {
