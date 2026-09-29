@@ -3,10 +3,10 @@ import Jugador from "../../app/dominio/jugador";
 import Equipo from "../../app/dominio/equipo";
 import { Delantero, Defensor, Mediocampista, Arquero } from "../../app/dominio/posicion";
 
-import EquipoPlantillaLlenaError from "../../app/dominio/equipo-plantilla-llena-error";
-import EquipoPresupuestoExcedidoError from "../../app/dominio/equipo-presupuesto-excedido-error";
-import EquipoCantidadArquerosExcedidoError from "../../app/dominio/equipo-cantidad-arqueros-excedido-error";
-import EquipoPresupuestoInicialNegativoError from "../../app/dominio/equipo-presupuesto-inicial-negativo-error";
+import EquipoPlantillaLlenaError from "../../app/dominio/clases-de-errores/equipo-plantilla-llena-error";
+import EquipoPresupuestoExcedidoError from "../../app/dominio/clases-de-errores/equipo-presupuesto-excedido-error";
+import EquipoCantidadArquerosExcedidoError from "../../app/dominio/clases-de-errores/equipo-cantidad-arqueros-excedido-error";
+import EquipoPresupuestoInicialNegativoError from "../../app/dominio/clases-de-errores/equipo-presupuesto-inicial-negativo-error";
 
 describe("Test Equipo: Ingreso campos validos", () => {
   const nombre = "Barcelona fc";

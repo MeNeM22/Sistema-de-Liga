@@ -1,6 +1,6 @@
 import Posicion from "../../app/dominio/posicion";
-import JugadorPotencialidadInvalidaError from "../../app/dominio/jugador-potencialidad-invalida-error";
-import JugadorValorMercadoNegativoError from "../../app/dominio/jugador-valor-mercado-negativo-error";
+import JugadorPotencialidadInvalidaError from "../../app/dominio/clases-de-errores/jugador-potencialidad-invalida-error";
+import JugadorValorMercadoNegativoError from "../../app/dominio/clases-de-errores/jugador-valor-mercado-negativo-error";
 
 export default class Jugador {
   private static readonly POTENCIALIDAD_MIN = 0;

@@ -1,9 +1,9 @@
 import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 
-import LigaCupoLlenoError from "../../app/dominio/liga-cupo-lleno-error";
-import LigaPresupuestoExcedidoError from "../../app/dominio/liga-presupuesto-excedido-error";
-import LigaEquipoRepetidoError from "../../app/dominio/liga-equipo-repetido-error";
+import LigaCupoLlenoError from "../../app/dominio/clases-de-errores/liga-cupo-lleno-error";
+import LigaPresupuestoExcedidoError from "../../app/dominio/clases-de-errores/liga-presupuesto-excedido-error";
+import LigaEquipoRepetidoError from "../../app/dominio/clases-de-errores/liga-equipo-repetido-error";
 
 describe("Test Liga: Límite de equipos", () => {
   test("Debería lanzar un error al intentar inscribir un equipo cuando ya hay 10 inscritos", () => {
