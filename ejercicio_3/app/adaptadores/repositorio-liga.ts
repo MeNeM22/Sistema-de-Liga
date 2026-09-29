@@ -87,25 +87,26 @@ export default class RepositorioLiga implements IRepositorioLiga {
 
   private extraerTipoPosicion(posicion: Posicion): string {
     if (posicion instanceof Delantero) {
-      return "Delantero";
+      return "delantero";
     } else if (posicion instanceof Defensor) {
-      return "Defensor";
+      return "defensor";
     } else if (posicion instanceof Mediocampista) {
-      return "Mediocampista";
+      return "mediocampista";
     } else if (posicion instanceof Arquero) {
-      return "Arquero";
+      return "arquero";
     }
     throw new Error("Posición no reconocida");
   }
 
   public fabricarPosicion(tipoPosicion: string): Posicion {
-    if (tipoPosicion === "Delantero") {
+    const posicionNormalizado: string = tipoPosicion.toLowerCase();
+    if (posicionNormalizado === "delantero") {
       return new Delantero();
-    } else if (tipoPosicion === "Defensor") {
+    } else if (posicionNormalizado === "defensor") {
       return new Defensor();
-    } else if (tipoPosicion === "Mediocampista") {
+    } else if (posicionNormalizado === "mediocampista") {
       return new Mediocampista();
-    } else if (tipoPosicion === "Arquero") {
+    } else if (posicionNormalizado === "arquero") {
       return new Arquero();
     }
     throw new Error(`Posicion desconocida en base de datos`);

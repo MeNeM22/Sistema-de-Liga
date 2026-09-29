@@ -1,8 +1,6 @@
 import Equipo from "../../app/dominio/equipo";
 import { IRepositorioLiga } from "../../app/dominio/puerto-repositorio-liga";
-import Posicion from "../../app/dominio/posicion";
 import Jugador from "./jugador";
-import { Arquero, Defensor, Mediocampista, Delantero } from "../../app/dominio/posicion";
 
 export default class SistemaLiga {
   private repositorioLiga: IRepositorioLiga;
@@ -32,18 +30,7 @@ export default class SistemaLiga {
   ): Promise<Jugador> {
     const liga = await this.repositorioLiga.obtenerLiga();
     const equipo = liga.obtenerEquipoPorID(idEquipo);
-
-    let posicionObjeto: Posicion;
-    const posNormalizada = posicionString.toLowerCase();
-
-    if (posNormalizada === "arquero") {
-      posicionObjeto = new Arquero();
-    } else if (posNormalizada === "defensor") {
-      posicionObjeto = new Defensor();
-    } else if (posNormalizada === "mediocampista") {
-      posicionObjeto = new Mediocampista();
-    } else posicionObjeto = new Delantero();
-
+    const posicionObjeto = this.repositorioLiga.fabricarPosicion(posicionString);
     const nuevoJugador = new Jugador(nombreJugador, valorMercado, nacionalidad, potencialidad, posicionObjeto);
 
     equipo.ficharJugador(nuevoJugador);
