@@ -26,6 +26,10 @@ export default class Jugador {
       throw new Error("El nombre de jugador es invalido");
     }
 
+    if (nacionalidad.trim() === "") {
+      throw new Error("La nacionalidad de jugador es invalida");
+    }
+
     this.nombre = nombre;
     this.valorMercado = valorMercado;
     this.nacionalidad = nacionalidad;

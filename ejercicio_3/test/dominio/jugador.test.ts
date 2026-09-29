@@ -5,11 +5,11 @@ import JugadorPotencialidadInvalidaError from "../../app/dominio/clases-de-error
 import JugadorValorMercadoNegativoError from "../../app/dominio/clases-de-errores/jugador-valor-mercado-negativo-error";
 
 describe("Test Jugador: Ingreso valores invalidos", () => {
-  const nombre = "Juan";
-  const nacionalidad = "Argentina";
   const posicion = new Delantero();
 
   test("Deberia devolver un error al ingresar una potencialidad mayor a 5", () => {
+    const nombre = "Juan";
+    const nacionalidad = "Argentina";
     const potencialidad = 6;
     const valorMercado = 1000;
     expect(() => {
@@ -18,6 +18,8 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
   });
 
   test("Deberia devolver un error al ingresar una potencialidad menor a 0", () => {
+    const nombre = "Juan";
+    const nacionalidad = "Argentina";
     const potencialidad = -1;
     const valorMercado = 1000;
     expect(() => {
@@ -26,6 +28,8 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
   });
 
   test("Deberia devolver un error al ingresar un valor de mercado negativo", () => {
+    const nombre = "Juan";
+    const nacionalidad = "Argentina";
     const potencialidad = 2;
     const valorMercado = -1;
     expect(() => {
@@ -34,13 +38,14 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
   });
 
   test("Deberia devolver un error al no ingresar un nombre", () => {
+    const nombre = "";
     const potencialidad = 2;
     const valorMercado = 1000;
     const nacionalidad = "Argentina";
     const posicion = new Defensor();
 
     expect(() => {
-      new Jugador("", valorMercado, nacionalidad, potencialidad, posicion);
+      new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
     }).toThrow("El nombre de jugador es invalido");
   });
 
@@ -54,6 +59,18 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
     }).toThrow("El nombre de jugador es invalido");
+  });
+
+  test("Deberia devolver un error al no ingresar una nacionalidad", () => {
+    const nombre = "Juan";
+    const potencialidad = 2;
+    const valorMercado = 1000;
+    const nacionalidad = "";
+    const posicion = new Defensor();
+
+    expect(() => {
+      new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
+    }).toThrow("La nacionalidad de jugador es invalida");
   });
 });
 
