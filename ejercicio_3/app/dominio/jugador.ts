@@ -22,7 +22,7 @@ export default class Jugador {
       throw new JugadorValorMercadoNegativoError();
     }
 
-    if (nombre.trim() === "") {
+    if (typeof nombre !== "string" || nombre.trim() === "") {
       throw new Error("El nombre de jugador es invalido");
     }
 
