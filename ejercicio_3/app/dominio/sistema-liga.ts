@@ -67,7 +67,7 @@ export default class SistemaLiga {
         nacionalidad: jugador.getNacionalidad(),
         posicion: jugador.getPosicion().constructor.name.toLowerCase(),
         valor_de_mercado: jugador.getValorMercado(),
-        potencialidad: jugador.getPosicion(),
+        potencialidad: jugador.getPotencialidad(),
       })),
       poder_defensivo: equipoBuscado.calcularPoderDefensivo(),
       poder_ofensivo: equipoBuscado.calcularPoderOfensivo(),
