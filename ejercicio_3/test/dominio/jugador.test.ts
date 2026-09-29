@@ -32,6 +32,17 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
     }).toThrow(JugadorValorMercadoNegativoError);
   });
+
+  test("Deberia devolver un error al no ingresar un nombre", () => {
+    const potencialidad = 2;
+    const valorMercado = 1000;
+    const nacionalidad = "Argentina";
+    const posicion = new Defensor();
+
+    expect(() => {
+      new Jugador("", valorMercado, nacionalidad, potencialidad, posicion);
+    }).toThrow("El nombre de jugador es invalido");
+  });
 });
 
 describe("Test Jugador: Ingreso valores validos", () => {
