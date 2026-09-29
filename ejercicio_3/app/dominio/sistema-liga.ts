@@ -61,13 +61,13 @@ export default class SistemaLiga {
       presupuesto: equipoBuscado.getPresupuesto(),
       presupuesto_ejecutado: equipoBuscado.getPresupuestoEjecutado(),
       estado: equipoBuscado.estaCompleto() ? "COMPLETO" : "INCOMPLETO",
-      jugadores: equipoBuscado.getPlantilla().map((jugador: any) => ({
-        id: jugador.id,
-        nombre: jugador.nombre,
-        nacionalidad: jugador.nacionalidad,
+      jugadores: equipoBuscado.getPlantilla().map((jugador: Jugador) => ({
+        id: jugador.getId(),
+        nombre: jugador.getNombre(),
+        nacionalidad: jugador.getNacionalidad(),
         posicion: jugador.getPosicion().constructor.name.toLowerCase(),
         valor_de_mercado: jugador.getValorMercado(),
-        potencialidad: jugador.potencialidad,
+        potencialidad: jugador.getPosicion(),
       })),
       poder_defensivo: equipoBuscado.calcularPoderDefensivo(),
       poder_ofensivo: equipoBuscado.calcularPoderOfensivo(),
