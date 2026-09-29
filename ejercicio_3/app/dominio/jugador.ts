@@ -11,7 +11,7 @@ export default class Jugador {
   private nacionalidad: string;
   private potencialidad: number;
   private posicion: Posicion;
-  public id!: string;
+  private id?: string;
 
   constructor(nombre: string, valorMercado: number, nacionalidad: string, potencialidad: number, posicion: Posicion) {
     if (potencialidad < Jugador.POTENCIALIDAD_MIN || potencialidad > Jugador.POTENCIALIDAD_MAX) {
@@ -53,5 +53,17 @@ export default class Jugador {
 
   public calcularPoderDefensivo(): number {
     return this.getPotencialidad() * -1;
+  }
+
+  public getId(): string | undefined {
+    return this.id;
+  }
+
+  public asignarId(id: string): void {
+    if (this.id !== undefined) {
+      return;
+    }
+
+    this.id = id;
   }
 }

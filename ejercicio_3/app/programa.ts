@@ -71,7 +71,7 @@ app.post("/equipos/:id_equipo/jugadores", async (req: Request, res: Response) =>
     }
 
     res.status(201).json({
-      id: resultado.id,
+      id: resultado.getId(),
       nombre: resultado.getNombre(),
       nacionalidad: resultado.getNacionalidad(),
       posicion: stringPosicion,

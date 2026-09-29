@@ -47,7 +47,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
             jugadorJson.potencialidad,
             posicion,
           );
-          jugador.id = jugadorJson.id;
+          jugador.asignarId(jugadorJson.id);
 
           equipo.ficharJugador(jugador);
         }
@@ -70,11 +70,11 @@ export default class RepositorioLiga implements IRepositorioLiga {
   }
 
   private mapearJugador(jugador: Jugador) {
-    if (!jugador.id) {
-      jugador.id = `j:${newUuid().toString()}`;
+    if (!jugador.getId()) {
+      jugador.asignarId(`j:${newUuid().toString()}`);
     }
     return {
-      id: jugador.id,
+      id: jugador.getId(),
       nombre: jugador.getNombre(),
       valorMercado: jugador.getValorMercado(),
       nacionalidad: jugador.getNacionalidad(),
