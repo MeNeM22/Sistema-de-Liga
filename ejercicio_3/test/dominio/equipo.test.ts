@@ -40,6 +40,25 @@ describe("Test Equipo: Ingreso campos validos", () => {
   });
 });
 
+describe("Test Equipo: Ingreso campos invalidos", () => {
+  test("Deberia lanzar un error si el nombre esta vacio", () => {
+    const nombre: string = "";
+    const presupuesto: number = 500;
+    expect(() => {
+      new Equipo(nombre, presupuesto);
+    }).toThrow("El nombre del equipo es invalido");
+  });
+
+  test("Deberia devolver un error al intentar inicializar un equipo con presupuesto negativo", () => {
+    const nombre = "Racing";
+    const presupuesto = -100;
+
+    expect(() => {
+      new Equipo(nombre, presupuesto);
+    }).toThrow(EquipoPresupuestoInicialNegativoError);
+  });
+});
+
 describe("Test Equipo: escenarios de prueba de consulta_de_equipo", () => {
   test("altojardin1 - Consulta de equipo con 2 arqueros, 4 defensores, 3 mediocampistas y 3 delanteros", () => {
     const equipo = new Equipo("River", 10000000);
@@ -125,15 +144,6 @@ describe("Test Equipo: presupuesto", () => {
     expect(() => {
       equipo.ficharJugador(jugador2);
     }).toThrow(EquipoPresupuestoExcedidoError);
-  });
-
-  test("Deberia devolver un error al intentar crear inicializar un equipo con presupuesto negativo", () => {
-    const nombre = "Racing";
-    const presupuesto = -100;
-
-    expect(() => {
-      new Equipo(nombre, presupuesto);
-    }).toThrow(EquipoPresupuestoInicialNegativoError);
   });
 });
 

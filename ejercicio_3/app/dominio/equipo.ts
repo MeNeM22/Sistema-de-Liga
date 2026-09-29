@@ -19,6 +19,11 @@ export default class Equipo {
     if (presupuestoInicial < 0) {
       throw new EquipoPresupuestoInicialNegativoError();
     }
+
+    if (nombre.trim() === "") {
+      throw new Error("El nombre del equipo es invalido");
+    }
+
     this.nombreEquipo = nombre;
     this.presupuesto = presupuestoInicial;
     this.plantilla = [];
