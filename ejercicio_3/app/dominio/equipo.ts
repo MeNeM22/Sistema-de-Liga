@@ -99,7 +99,10 @@ export default class Equipo {
   }
 
   public estaCompleto(): boolean {
-    return this.getCantidadDeJugadores() === Equipo.JUGADORES_MAX && this.contarArquerosEnPlantilla() === 2;
+    return (
+      this.getCantidadDeJugadores() === Equipo.JUGADORES_MAX &&
+      this.contarArquerosEnPlantilla() === Equipo.ARQUEROS_REQUERIDOS
+    );
   }
 
   public getId(): string | undefined {
