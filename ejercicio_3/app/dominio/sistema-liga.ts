@@ -2,6 +2,7 @@ import Equipo from "../../app/dominio/equipo";
 import { IRepositorioLiga } from "../../app/dominio/puerto-repositorio-liga";
 import Jugador from "./jugador";
 import FabricaPosicion from "../../app/dominio/fabrica-de-posicion";
+import { v4 as newUuid } from "uuid";
 
 export default class SistemaLiga {
   private repositorioLiga: IRepositorioLiga;
@@ -13,6 +14,7 @@ export default class SistemaLiga {
   public async registrarEquipo(nombre: string, presupuesto: number): Promise<Equipo> {
     const liga = await this.repositorioLiga.obtenerLiga();
     const nuevoEquipo = new Equipo(nombre, presupuesto);
+    nuevoEquipo.asignarId(`e:${newUuid().toString()}`);
 
     liga.registrarEquipo(nuevoEquipo);
 
@@ -36,7 +38,7 @@ export default class SistemaLiga {
 
     const posicionObjeto = fabricaPosicion.crear(posicionString);
     const nuevoJugador = new Jugador(nombreJugador, valorMercado, nacionalidad, potencialidad, posicionObjeto);
-
+    nuevoJugador.asignarId(`j:${newUuid().toString()}`);
     equipo.ficharJugador(nuevoJugador);
 
     await this.repositorioLiga.guardar(liga);

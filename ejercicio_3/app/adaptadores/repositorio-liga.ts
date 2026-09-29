@@ -3,7 +3,6 @@ import clienteRedis from "./cliente-redis";
 import Liga from "../../app/dominio/liga";
 import Equipo from "../../app/dominio/equipo";
 import Jugador from "../../app/dominio/jugador";
-import { v4 as newUuid } from "uuid";
 import FabricaPosicion from "../../app/dominio/fabrica-de-posicion";
 
 export default class RepositorioLiga implements IRepositorioLiga {
@@ -59,9 +58,6 @@ export default class RepositorioLiga implements IRepositorioLiga {
   }
 
   private mapearEquipo(equipo: Equipo) {
-    if (!equipo.getId()) {
-      equipo.asignarId(`e:${newUuid().toString()}`);
-    }
     return {
       id: equipo.getId(),
       nombreEquipo: equipo.getNombreEquipo(),
@@ -71,9 +67,6 @@ export default class RepositorioLiga implements IRepositorioLiga {
   }
 
   private mapearJugador(jugador: Jugador) {
-    if (!jugador.getId()) {
-      jugador.asignarId(`j:${newUuid().toString()}`);
-    }
     return {
       id: jugador.getId(),
       nombre: jugador.getNombre(),
