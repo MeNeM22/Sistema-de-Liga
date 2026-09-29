@@ -62,7 +62,7 @@ export default class Equipo {
   }
 
   private plantillaEstaLlena(): boolean {
-    return this.getCantidadDeJugadores() == Equipo.JUGADORES_MAX;
+    return this.getCantidadDeJugadores() === Equipo.JUGADORES_MAX;
   }
 
   private calcularInversionFutura(valorJugadorNuevo: number): number {
