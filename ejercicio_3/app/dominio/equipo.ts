@@ -4,6 +4,7 @@ import EquipoPlantillaLlenaError from "../../app/dominio/clases-de-errores/equip
 import EquipoPresupuestoExcedidoError from "../../app/dominio/clases-de-errores/equipo-presupuesto-excedido-error";
 import EquipoCantidadArquerosExcedidoError from "../../app/dominio/clases-de-errores/equipo-cantidad-arqueros-excedido-error";
 import EquipoPresupuestoInicialNegativoError from "../../app/dominio/clases-de-errores/equipo-presupuesto-inicial-negativo-error";
+import EquipoNombreInvalidoError from "../../app/dominio/clases-de-errores/equipo-nombre-invalido-error";
 
 export default class Equipo {
   private static readonly JUGADORES_MAX = 32;
@@ -21,7 +22,7 @@ export default class Equipo {
     }
 
     if (typeof nombre !== "string" || nombre.trim() === "") {
-      throw new Error("El nombre del equipo es invalido");
+      throw new EquipoNombreInvalidoError();
     }
 
     this.nombreEquipo = nombre;

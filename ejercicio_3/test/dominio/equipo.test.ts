@@ -7,6 +7,7 @@ import EquipoPlantillaLlenaError from "../../app/dominio/clases-de-errores/equip
 import EquipoPresupuestoExcedidoError from "../../app/dominio/clases-de-errores/equipo-presupuesto-excedido-error";
 import EquipoCantidadArquerosExcedidoError from "../../app/dominio/clases-de-errores/equipo-cantidad-arqueros-excedido-error";
 import EquipoPresupuestoInicialNegativoError from "../../app/dominio/clases-de-errores/equipo-presupuesto-inicial-negativo-error";
+import EquipoNombreInvalidoError from "../../app/dominio/clases-de-errores/equipo-nombre-invalido-error";
 
 describe("Test Equipo: Ingreso campos validos", () => {
   const nombre = "Barcelona fc";
@@ -46,7 +47,7 @@ describe("Test Equipo: Ingreso campos invalidos", () => {
     const presupuesto: number = 500;
     expect(() => {
       new Equipo(nombre, presupuesto);
-    }).toThrow("El nombre del equipo es invalido");
+    }).toThrow(EquipoNombreInvalidoError);
   });
 
   test("Deberia lanzar un error si el nombre es un numero", () => {
@@ -54,7 +55,7 @@ describe("Test Equipo: Ingreso campos invalidos", () => {
     const presupuesto: number = 500;
     expect(() => {
       new Equipo(nombre, presupuesto);
-    }).toThrow("El nombre del equipo es invalido");
+    }).toThrow(EquipoNombreInvalidoError);
   });
 
   test("Deberia devolver un error al intentar inicializar un equipo con presupuesto negativo", () => {
