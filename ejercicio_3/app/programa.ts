@@ -44,39 +44,45 @@ app.post("/equipos", async (req: Request, res: Response) => {
 });
 
 app.post("/equipos/:id_equipo/jugadores", async (req: Request, res: Response) => {
-  const idEquipo = req.params.id_equipo;
-  const { nombre, valor_de_mercado, nacionalidad, potencialidad, posicion } = req.body;
+  try {
+    const idEquipo = req.params.id_equipo;
+    const { nombre, valor_de_mercado, nacionalidad, potencialidad, posicion } = req.body;
 
-  const resultado = await sistemaLiga.ficharJugadorPorIdEquipo(
-    idEquipo,
-    nombre,
-    valor_de_mercado,
-    nacionalidad,
-    potencialidad,
-    posicion,
-  );
+    const resultado = await sistemaLiga.ficharJugadorPorIdEquipo(
+      idEquipo,
+      nombre,
+      valor_de_mercado,
+      nacionalidad,
+      potencialidad,
+      posicion,
+    );
 
-  const objetoPosicion = resultado.getPosicion();
-  let stringPosicion = "";
+    const objetoPosicion = resultado.getPosicion();
+    let stringPosicion = "";
 
-  if (objetoPosicion instanceof Arquero) {
-    stringPosicion = "arquero";
-  } else if (objetoPosicion instanceof Defensor) {
-    stringPosicion = "defensor";
-  } else if (objetoPosicion instanceof Mediocampista) {
-    stringPosicion = "mediocampista";
-  } else if (objetoPosicion instanceof Delantero) {
-    stringPosicion = "delantero";
+    if (objetoPosicion instanceof Arquero) {
+      stringPosicion = "arquero";
+    } else if (objetoPosicion instanceof Defensor) {
+      stringPosicion = "defensor";
+    } else if (objetoPosicion instanceof Mediocampista) {
+      stringPosicion = "mediocampista";
+    } else if (objetoPosicion instanceof Delantero) {
+      stringPosicion = "delantero";
+    }
+
+    res.status(201).json({
+      id: resultado.id,
+      nombre: resultado.getNombre(),
+      nacionalidad: resultado.getNacionalidad(),
+      posicion: stringPosicion,
+      valor_de_mercado: resultado.getValorMercado(),
+      potencialidad: resultado.getPotencialidad(),
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      error: error.message,
+    });
   }
-
-  res.status(201).json({
-    id: resultado.id,
-    nombre: resultado.getNombre(),
-    nacionalidad: resultado.getNacionalidad(),
-    posicion: stringPosicion,
-    valor_de_mercado: resultado.getValorMercado(),
-    potencialidad: resultado.getPotencialidad(),
-  });
 });
 
 app.get("/equipos", async (req: Request, res: Response) => {

@@ -13,7 +13,7 @@ afterAll(() => {
   server.close();
 });
 
-describe("POST /alumnos", () => {
+describe("POST /equipos", () => {
   test("Deberia devolver estado OK e incluir los datos del equipo creado en la respuesta", async () => {
     const respuesta = await requestWithSupertest.post("/equipos").send({ nombre: "San Miguel", presupuesto: 10000 });
 
@@ -31,7 +31,7 @@ describe("POST /alumnos", () => {
   });
 });
 
-describe("POST /equipos/jugadores", () => {
+describe("POST /equipos/:id_equipo/jugadores", () => {
   test("Deberia fichar un jugador en un equipo existente y devolver estado 201", async () => {
     const respuestaEquipo = await requestWithSupertest.post("/equipos").send({ nombre: "Racing", presupuesto: 500000 });
 
@@ -52,6 +52,33 @@ describe("POST /equipos/jugadores", () => {
     expect(respuestaJugador.body.posicion).toEqual("defensor");
     expect(respuestaJugador.body.valor_de_mercado).toEqual(100);
     expect(respuestaJugador.body.potencialidad).toEqual(1);
+  });
+
+  test("Deberia devolver un estado 400 y un mensaje de error si se excede la capacidad maxima de plantilla", async () => {
+    const respuestaEquipo = await requestWithSupertest.post("/equipos").send({ nombre: "Racing", presupuesto: 500000 });
+
+    const idEquipo = respuestaEquipo.body.id;
+    const CAPACIDAD_MAX = 32;
+
+    for (let i = 0; i < CAPACIDAD_MAX; i++) {
+      await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+        nombre: `Delantero ${i}`,
+        nacionalidad: "argentino",
+        posicion: "delantero",
+        valor_de_mercado: 10,
+        potencialidad: 5,
+      });
+    }
+
+    const respuestaExceso = await requestWithSupertest.post(`/equipos/${idEquipo}/jugadores`).send({
+      nombre: "jugador extra",
+      nacionalidad: "argentino",
+      posicion: "arquero",
+      valor_de_mercado: 10,
+      potencialidad: 1,
+    });
+    expect(respuestaExceso.status).toEqual(400);
+    expect(respuestaExceso.body.error).toBeDefined();
   });
 });
 

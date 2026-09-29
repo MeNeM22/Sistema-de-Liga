@@ -85,7 +85,7 @@ export default class RepositorioLiga implements IRepositorioLiga {
     };
   }
 
-  private extraerTipoPosicion(posicion: Posicion): string {
+  public extraerTipoPosicion(posicion: Posicion): string {
     if (posicion instanceof Delantero) {
       return "delantero";
     } else if (posicion instanceof Defensor) {
