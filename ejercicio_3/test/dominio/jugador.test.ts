@@ -3,6 +3,8 @@ import { Delantero, Defensor } from "../../app/dominio/posicion";
 
 import JugadorPotencialidadInvalidaError from "../../app/dominio/clases-de-errores/jugador-potencialidad-invalida-error";
 import JugadorValorMercadoNegativoError from "../../app/dominio/clases-de-errores/jugador-valor-mercado-negativo-error";
+import JugadorNombreInvalidoError from "../../app/dominio/clases-de-errores/jugador-nombre-invalido-error";
+import JugadorNacionalidadInvalidaError from "../../app/dominio/clases-de-errores/jugador-nacionalidad-invalida-error";
 
 describe("Test Jugador: Ingreso valores invalidos", () => {
   const posicion = new Delantero();
@@ -46,7 +48,7 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
 
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
-    }).toThrow("El nombre de jugador es invalido");
+    }).toThrow(JugadorNombreInvalidoError);
   });
 
   test("Deberia devolver un error al un numero como nombre", () => {
@@ -58,7 +60,7 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
 
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
-    }).toThrow("El nombre de jugador es invalido");
+    }).toThrow(JugadorNombreInvalidoError);
   });
 
   test("Deberia devolver un error al no ingresar una nacionalidad", () => {
@@ -70,7 +72,7 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
 
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
-    }).toThrow("La nacionalidad de jugador es invalida");
+    }).toThrow(JugadorNacionalidadInvalidaError);
   });
 
   test("Deberia devolver un error al ingresar un numero como nacionalidad", () => {
@@ -82,7 +84,7 @@ describe("Test Jugador: Ingreso valores invalidos", () => {
 
     expect(() => {
       new Jugador(nombre, valorMercado, nacionalidad, potencialidad, posicion);
-    }).toThrow("La nacionalidad de jugador es invalida");
+    }).toThrow(JugadorNacionalidadInvalidaError);
   });
 });
 

@@ -1,6 +1,9 @@
 import Posicion from "../../app/dominio/posicion";
+
 import JugadorPotencialidadInvalidaError from "../../app/dominio/clases-de-errores/jugador-potencialidad-invalida-error";
 import JugadorValorMercadoNegativoError from "../../app/dominio/clases-de-errores/jugador-valor-mercado-negativo-error";
+import JugadorNombreInvalidoError from "../../app/dominio/clases-de-errores/jugador-nombre-invalido-error";
+import JugadorNacionalidadInvalidaError from "../../app/dominio/clases-de-errores/jugador-nacionalidad-invalida-error";
 
 export default class Jugador {
   private static readonly POTENCIALIDAD_MIN = 0;
@@ -23,11 +26,11 @@ export default class Jugador {
     }
 
     if (typeof nombre !== "string" || nombre.trim() === "") {
-      throw new Error("El nombre de jugador es invalido");
+      throw new JugadorNombreInvalidoError();
     }
 
     if (typeof nacionalidad !== "string" || nacionalidad.trim() === "") {
-      throw new Error("La nacionalidad de jugador es invalida");
+      throw new JugadorNacionalidadInvalidaError();
     }
 
     this.nombre = nombre;
