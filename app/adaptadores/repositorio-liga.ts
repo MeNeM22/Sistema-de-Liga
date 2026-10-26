@@ -1,9 +1,9 @@
-import { IRepositorioLiga } from "app/dominio/puerto-repositorio-liga";
+import { IRepositorioLiga } from "../dominio/puerto-repositorio-liga";
 import clienteRedis from "./cliente-redis";
-import Liga from "../../app/dominio/liga";
-import Equipo from "../../app/dominio/equipo";
-import Jugador from "../../app/dominio/jugador";
-import FabricaPosicion from "../../app/dominio/fabrica-de-posicion";
+import Liga from "../dominio/liga";
+import Equipo from "../dominio/equipo";
+import Jugador from "../dominio/jugador";
+import FabricaPosicion from "../dominio/fabrica-de-posicion";
 
 export default class RepositorioLiga implements IRepositorioLiga {
   private readonly CLAVE_LIGA = "liga_argentina";
